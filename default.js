@@ -2,45 +2,68 @@
 var searchButton = document.getElementById("search-button");
 searchButton.addEventListener('click', function(e){
   var itemSearched = document.getElementById("input-search").value;
-  searchItem(itemSearched);
+  search(itemSearched.toLowerCase());
   e.preventDefault();
 })
 
 //Functions
-var searchItem = function(item){
-  for (var property in data){
-    if(property == item) {
-      for(var itemName in data[item]){
-        var prop = data[item][itemName]
-        var productName = prop.name
-        var titleDetail = prop.processor
-        var description = prop.gpu
-        var image = "images/test.png"
-        createItems(productName, titleDetail, description, image)
-      }
+// var searchItem = function(item){
+//   for (var property in data){
+//     if(property == item) {
+//       for(var itemName in data[item]){
+//         var prop = data[item][itemName]
+//         var productName = prop.name
+//         var highlights = prop.highlights
+//         var description = prop.description
+//         var image = prop.image
+//         createItems(productName, highlights, description, image)
+//       }
+//     }
+//   }
+// };
+
+var search = function(item){
+  for(var i = 0; i<data.length; i++){
+    if(data[i].keyword == item){
+      console.log("found!");
+      var prop = data[i]
+      var productName = prop.name
+      var highlights = prop.highlights
+      var description = prop.description
+      var image = prop.image
+      createItems(productName, highlights, description, image)
     }
   }
-};
+}
 
-
-var createItems = function(name, titleDetail, description, image){
+var createItems = function(name, highlights, description, image){
   var d = document
   var frag = d.createDocumentFragment();
   var rowDiv = d.createElement("div")
     , colDiv1 = d.createElement("div")
     , colDiv2 = d.createElement("div")
     , colText = d.createTextNode(name)
-    , colText2 = d.createTextNode(titleDetail)
+    , list = d.createElement("li")
+    , listText = d.createTextNode(description)
+    , colText2 = d.createTextNode(highlights)
     , innerContainer = d.getElementById('subItem-container');
 
   var rowDiv2 = d.createElement("div")
     , colDiv3 = d.createElement("div")
     , colDiv4 = d.createElement("div")
-    , colText3 = d.createTextNode(description)
     , imgElement = d.createElement("img")
     , aLink = d.createElement("a")
     , aLinkText = d.createTextNode("Add Cart")
     , colDiv4 = d.createElement("div");
+
+  var listFunction = function(array){
+    for(i=0; i<array.length; i++){
+      var list = d.createElement("li")
+      var listText = d.createTextNode(array[i])
+      list.appendChild(listText)
+      colDiv4.appendChild(list)
+    }
+  }
 
     rowDiv.className = "row"
     colDiv1.className ="col-md-2 col-md-offset-1 align-center"
@@ -62,9 +85,9 @@ var createItems = function(name, titleDetail, description, image){
 
     colDiv3.appendChild(imgElement);
     imgElement.src = image
-    aLink.appendChild(aLinkText)
+    aLink.appendChild(aLinkText);
     colDiv3.appendChild(aLink);
-    colDiv4.appendChild(colText3);
+    listFunction(description);
     rowDiv2.appendChild(colDiv3);
     rowDiv2.appendChild(colDiv4);
 
