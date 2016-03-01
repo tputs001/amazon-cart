@@ -47,9 +47,9 @@ var updateTotal = function(sub_total){
     return formatted
   }
 
-  var tax = sub_total * 0.08
+  var tax = (sub_total * 0.08).toFixed(2)
   var shipping = 25.00
-  var total = (sub_total + tax + shipping)
+  var total = (sub_total + tax + shipping).toFixed(2)
 
   subtotalSpan.innerHTML = formatting(sub_total);
   taxSpan.innerHTML = formatting(tax);
