@@ -18,7 +18,7 @@
             <div class="form-group">
               <label for="search"></label>
               <input class="form-control" id="input-search" type="search" placeholder="Enter your search">
-              <button class="btn btn-default" id="search-button" type="submit">Search!</button>
+              <button class="btn btn-default margin-top" id="search-button" type="submit">Search!</button>
               <i class="fa fa-search fa-2x" id="magnifier-icon"></i>
             </div>
           </form>
@@ -70,7 +70,7 @@
             <div class="panel-heading">
               <h3 class="panel-title">Your Cart </h3>
             </div>
-            <div class="panel-body" id="payment">
+            <div class="panel-body" id="cart">
             </div>
           </div>
           <div class="panel panel-default" id="total">
@@ -85,18 +85,61 @@
               Total: <span id="total_sum">$0.00</span>
             </div>
           </div>
-          <!-- <form>
-            <div class= "form-group col-md-5 display-inline">
-              <label for="firstName">First Name</label>
-              <input type="text" class="form-control" id="firstName" placeholder="Name">
+          <div class="panel panel-default width center" id="creditCard">
+            <div class="panel-heading">
+              <h3 class="panel-title">Credit Card Information </h3>
             </div>
-            <div class="form-group col-md-6">
-              <label for="lastName">Last Name</label>
-              <input type="text" class="form-control" id="lastName" placeholder="LastName">
+            <div class="panel-body">
+              <form>
+                <div class= "form-group col-md-5 display-inline">
+                  <label for="firstName">First Name</label>
+                  <input type="text" class="form-control" id="firstName" placeholder="Name">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="lastName">Last Name</label>
+                  <input type="text" class="form-control" id="lastName" placeholder="LastName">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="address">Address</label>
+                  <input type="text" class="form-control" id="address" placeholder="Address">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="city">City</label>
+                  <input type="text" class="form-control" id="city" placeholder="City">
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="state">State</label>
+                  <input type="text" class="form-control" id="state" placeholder="State">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="country">Country</label>
+                  <input type="text" class="form-control" id="country" placeholder="Country">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" id="email" placeholder="Email">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="phone">Phone</label>
+                  <input type="number" class="form-control" id="phone" placeholder="XXX-XXX-XXXX">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="credit">Credit Card</label>
+                  <input type="text" class="form-control" id="phone" placeholder="Credit Card Number">
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="cvv">CVV</label>
+                  <input type="text" class="form-control" id="cvv" placeholder="CVV">
+                </div>
+                <div class= "form-group col-md-1 col-md-offset-7 margin-top">
+                  <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+                <div class= "form-group col-md-1 margin-top">
+                  <button type="reset" class="btn btn-default">Reset</button>
+                </div>
+              </form>
             </div>
-            <div class="form-group">
-            </div>
-          </form> -->
+          </div>
         </div>
       </div>
     </div>

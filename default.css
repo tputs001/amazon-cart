@@ -42,6 +42,10 @@ h1 {
   margin: 0 auto;
 }
 
+.margin-top {
+  margin-top: 20px;
+}
+
 #payment-container {
   position: relative;
   top:100%;
@@ -66,7 +70,7 @@ h1 {
   margin: 0 auto;
 }
 
-#payment img {
+#cart img {
   display: block;
   width: 100px;
   height: 100px;
@@ -99,8 +103,4 @@ h1 {
   position: relative;
   top: 40%;
   height: 25%;
-}
-
-#search-button {
-  margin-top: 20px;
 }
