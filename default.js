@@ -1,27 +1,27 @@
-//Event Listeners
+var addedItems = [];
+
+// Event Listeners
 var searchButton = document.getElementById("search-button");
 searchButton.addEventListener('click', function(e){
-  var itemSearched = document.getElementById("input-search").value;
-  search(itemSearched.toLowerCase());
+  var itemSearched = document.getElementById("input-search").value.toLowerCase();
+  search(itemSearched);
   e.preventDefault();
 })
 
-//Functions
-// var searchItem = function(item){
-//   for (var property in data){
-//     if(property == item) {
-//       for(var itemName in data[item]){
-//         var prop = data[item][itemName]
-//         var productName = prop.name
-//         var highlights = prop.highlights
-//         var description = prop.description
-//         var image = prop.image
-//         createItems(productName, highlights, description, image)
-//       }
-//     }
-//   }
-// };
+//FUNCTIONS
 
+//addEventListeners to each a tags by ID
+var addEvent = function(id){
+  var elementId = document.getElementById(id);
+  var addedCount = document.getElementById("number");
+  elementId.addEventListener('click', function(e){
+    addedItems.push(id);
+    addedCount.innerHTML = addedItems.length;
+    e.preventDefault();
+  })
+}
+
+//search the data object based on the input value of the user
 var search = function(item){
   for(var i = 0; i<data.length; i++){
     if(data[i].keyword == item){
@@ -30,13 +30,16 @@ var search = function(item){
       var productName = prop.name
       var highlights = prop.highlights
       var description = prop.description
+      var id = prop.id
       var image = prop.image
-      createItems(productName, highlights, description, image)
+      createItems(productName, highlights, description, id, image)
+      addEvent(id);
     }
   }
 }
 
-var createItems = function(name, highlights, description, image){
+//create several divs and columns that will append in the item container values from the data object.
+var createItems = function(name, highlights, description, id ,image){
   var d = document
   var frag = d.createDocumentFragment();
   var rowDiv = d.createElement("div")
@@ -80,8 +83,8 @@ var createItems = function(name, highlights, description, image){
     colDiv3.className = "col-md-1 col-md-offset-1 item-picture"
     colDiv4.className = "col-md-8 col-md-offset-1"
     aLink.className = "align-center"
+    aLink.id = id
     aLink.href = "/"
-    aLink.id = "item 1"
 
     colDiv3.appendChild(imgElement);
     imgElement.src = image
