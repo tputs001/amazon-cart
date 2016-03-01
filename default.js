@@ -5,7 +5,6 @@ var searchButton = document.getElementById("search-button");
 searchButton.addEventListener('click', function(e){
   var itemSearched = document.getElementById("input-search").value.toLowerCase();
   search(itemSearched);
-  // toggleDisplay("display")
   e.preventDefault();
 })
 
@@ -32,18 +31,26 @@ checkOut.addEventListener('click', function(e){
   e.preventDefault();
 })
 
+var formSubmission = document.getElementById("formSubmit");
+formSubmission.addEventListener('click', function(e){
+  formData();
+  alert("Form Submitted!")
+  e.preventDefault();
+})
+
 //FUNCTIONS
 
-// var toggleDisplay = function(className){
-//   var elementClass = document.getElementsByClassName(className)
-//   for(var i = 0; i<elementClass.length; i++){
-//     console.log(elementClass[i]);
-//     // elementArray[i].className = "display-none";
-//     elementClass[i].style.display = "none"
-//     // elementClass[i].className = "display-none"
-//   }
-// }
-
+//Loops through the form elements creating an object of data to be sent off and processed
+var formData = function(){
+  form = document.getElementById("creditCard")
+  var dataObject = {}
+  var elements = form.elements
+  for(var i = 0; i<elements.length; i++){
+    dataObject[elements[i].id] = elements[i].value;
+  }
+  console.log(dataObject);
+  return dataObject
+}
 //Formatting for the numbers -- Adding commas
 var formatting = function(number){
   var numToString = number.toString();

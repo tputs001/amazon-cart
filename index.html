@@ -85,12 +85,12 @@
               Total: <span id="total_sum">$0.00</span>
             </div>
           </div>
-          <div class="panel panel-default width center" id="creditCard">
+          <div class="panel panel-default width center">
             <div class="panel-heading">
               <h3 class="panel-title">Credit Card Information </h3>
             </div>
             <div class="panel-body">
-              <form>
+              <form id="creditCard">
                 <div class= "form-group col-md-5 display-inline">
                   <label for="firstName">First Name</label>
                   <input type="text" class="form-control" id="firstName" placeholder="Name">
@@ -132,7 +132,7 @@
                   <input type="text" class="form-control" id="cvv" placeholder="CVV">
                 </div>
                 <div class= "form-group col-md-1 col-md-offset-7 margin-top">
-                  <button type="submit" class="btn btn-default">Submit</button>
+                  <button type="submit" class="btn btn-default" id ="formSubmit">Submit</button>
                 </div>
                 <div class= "form-group col-md-1 margin-top">
                   <button type="reset" class="btn btn-default">Reset</button>
