@@ -12,19 +12,6 @@ searchButton.addEventListener('click', function(e){
 var checkOut = document.getElementById("checkout");
 checkOut.addEventListener('click', function(e){
   console.log(addedItems);
-  for(var i = 0; i < addedItems.length; i++){
-    for(var j = 0; j < data.length; j++){
-      if (addedItems[i] == data[j].id){
-        var prop = data[j]
-        var productName = prop.name
-        var highlights = prop.highlights
-        var description = prop.description
-        var id = prop.id
-        var image = prop.image
-        createItems(productName, highlights, description, id, image, "payment")
-      }
-    }
-  }
   e.preventDefault();
 })
 
@@ -63,14 +50,14 @@ var search = function(item){
       var description = prop.description
       var id = prop.id
       var image = prop.image
-      createItems(productName, highlights, description, id, image, "display-container")
+      createItems(productName, highlights, description, id, image)
       addEvent(id);
     }
   }
 }
 
 //create several divs and columns that will append in the item container values from the data object.
-var createItems = function(name, highlights, description, id ,image, elementContainer){
+var createItems = function(name, highlights, description, id ,image){
   var d = document
   var frag = d.createDocumentFragment();
   var rowDiv = d.createElement("div")
@@ -80,7 +67,7 @@ var createItems = function(name, highlights, description, id ,image, elementCont
     , list = d.createElement("li")
     , listText = d.createTextNode(description)
     , colText2 = d.createTextNode(highlights)
-    , innerContainer = d.getElementById(elementContainer);
+    , innerContainer = d.getElementById('display-container');
 
   var rowDiv2 = d.createElement("div")
     , colDiv3 = d.createElement("div")
@@ -113,19 +100,14 @@ var createItems = function(name, highlights, description, id ,image, elementCont
     rowDiv2.className = "row"
     colDiv3.className = "col-md-1 col-md-offset-1 item-picture"
     colDiv4.className = "col-md-8 col-md-offset-1"
+    aLink.className = "align-center"
+    aLink.id = id
+    aLink.href = "/";
+
     colDiv3.appendChild(imgElement);
     imgElement.src = image
-
-    if(elementContainer == "payment"){
-      console.log("Not adding in the ADD LINK")
-    } else {
-      aLink.className = "align-center"
-      aLink.id = id
-      aLink.href = "/";
-      aLink.appendChild(aLinkText);
-      colDiv3.appendChild(aLink);
-    }
-    
+    aLink.appendChild(aLinkText);
+    colDiv3.appendChild(aLink);
     listFunction(description);
     rowDiv2.appendChild(colDiv3);
     rowDiv2.appendChild(colDiv4);

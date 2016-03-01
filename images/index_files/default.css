@@ -1,7 +1,3 @@
-h1 {
-  text-align: center;
-}
-
 .title-container {
   background-color: yellow;
   background-repeat: no-repeat;
@@ -14,6 +10,7 @@ h1 {
 .items-container {
   position: relative;
   top: 60%;
+  border: 1px solid blue;
   /*overflow-y:auto;*/
 }
 
@@ -30,37 +27,16 @@ h1 {
   background-color: white;
 }
 
-.display-inline {
-  display: inline;
-}
-
-.width {
-  width: 60%;
-}
-
-.center {
-  margin: 0 auto;
-}
-
 #payment-container {
   position: relative;
-  top:100%;
-  height: 600px;
-  text-align: left;
 }
 
 #display-container {
   text-align: left;
+  border: 1px solid red;
 }
 
 #display-container img{
-  display: block;
-  width: 100px;
-  height: 100px;
-  margin: 0 auto;
-}
-
-#payment img {
   display: block;
   width: 100px;
   height: 100px;
