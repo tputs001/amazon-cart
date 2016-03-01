@@ -49,6 +49,12 @@ h1 {
   text-align: left;
 }
 
+#total {
+  width: 30%;
+  margin-left: 50%;
+  text-align: right;
+}
+
 #display-container {
   text-align: left;
 }

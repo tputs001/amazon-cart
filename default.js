@@ -12,6 +12,7 @@ searchButton.addEventListener('click', function(e){
 var checkOut = document.getElementById("checkout");
 checkOut.addEventListener('click', function(e){
   console.log(addedItems);
+  var sub_total = 0;
   for(var i = 0; i < addedItems.length; i++){
     for(var j = 0; j < data.length; j++){
       if (addedItems[i] == data[j].id){
@@ -21,12 +22,41 @@ checkOut.addEventListener('click', function(e){
         var description = prop.description
         var id = prop.id
         var image = prop.image
+        sub_total += prop.price;
         createItems(productName, highlights, description, id, image, "payment")
       }
     }
   }
+  updateTotal(sub_total)
   e.preventDefault();
 })
+
+var updateTotal = function(sub_total){
+  var subtotalSpan = document.getElementById("subtotal");
+  var taxSpan = document.getElementById("tax");
+  var shippingSpan = document.getElementById("shipping");
+  var totalSpan = document.getElementById("total_sum");
+
+  var formatting = function(number){
+    var numToString = number.toString();
+    if(numToString >= 1000){
+      var formatted = '$' + numToString.charAt(0) + ',' + numToString.slice(1, numToString.length);
+    } else {
+      var formatted = '$' + numToString
+    }
+    return formatted
+  }
+
+  var tax = sub_total * 0.08
+  var shipping = 25.00
+  var total = (sub_total + tax + shipping)
+
+  subtotalSpan.innerHTML = formatting(sub_total);
+  taxSpan.innerHTML = formatting(tax);
+  shippingSpan.innerHTML = formatting(shipping);
+  console.log(total)
+  totalSpan.innerHTML = formatting(total);
+}
 
 //FUNCTIONS
 
@@ -125,7 +155,7 @@ var createItems = function(name, highlights, description, id ,image, elementCont
       aLink.appendChild(aLinkText);
       colDiv3.appendChild(aLink);
     }
-    
+
     listFunction(description);
     rowDiv2.appendChild(colDiv3);
     rowDiv2.appendChild(colDiv4);
