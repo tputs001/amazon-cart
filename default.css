@@ -1,3 +1,8 @@
+body, html {
+  height: 100%;
+  width: 100%;
+}
+
 h1 {
   text-align: center;
 }
@@ -7,16 +12,8 @@ h1 {
   top: 60%;
 }
 
-.item-picture {
-  padding-bottom: 15px;
-}
-
 .align-center {
   text-align:center;
-}
-
-.padding-left {
-  padding-left: 25px;
 }
 
 .hidden {
@@ -25,7 +22,7 @@ h1 {
 }
 
 .width {
-  width: 60%;
+  width: 70%;
 }
 
 .center {
@@ -34,6 +31,11 @@ h1 {
 
 .margin-top {
   margin-top: 20px;
+}
+
+.box-size {
+  height: 150px;
+  width: 150px;
 }
 
 #payment-container {
@@ -45,7 +47,7 @@ h1 {
 
 #total {
   width: 30%;
-  margin-left: 50%;
+  margin-left: 55%;
   text-align: right;
 }
 
@@ -73,9 +75,13 @@ h1 {
 }
 
 #title-container {
-  background-image: url("images/background.png");
-  background-repeat: no-repeat;
-  background-size: 100%;
-  height: 800px;
+  background: url("images/background.png") no-repeat;
+  background-position: bottom;
+  width: 100%;
+  height: 100%;
   text-align: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
 }
