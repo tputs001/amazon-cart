@@ -4,13 +4,25 @@ var addedItems = [];
 var searchButton = document.getElementById("search-button");
 searchButton.addEventListener('click', function(e){
   var itemSearched = document.getElementById("input-search").value.toLowerCase();
-  search(itemSearched);
-  e.preventDefault();
+  search(itemSearched)
+  display("items")
+  hide("title-container")
+  e.preventDefault()
+})
+
+var searchInput2 = document.getElementById("input-search2");
+searchInput2.addEventListener('keypress', function(e){
+  if(e.keyCode == 13){
+    search(this.value)
+    e.preventDefault()
+  }
 })
 
 //Checkout Event Listeners
 var checkOut = document.getElementById("checkout");
 checkOut.addEventListener('click', function(e){
+  hide("items")
+  display("payment-container")
   console.log(addedItems);
   var sub_total = 0;
   for(var i = 0; i < addedItems.length; i++){
@@ -31,14 +43,25 @@ checkOut.addEventListener('click', function(e){
   e.preventDefault();
 })
 
+//Form Submission Listener
 var formSubmission = document.getElementById("formSubmit");
 formSubmission.addEventListener('click', function(e){
-  formData();
+  formData()
   alert("Form Submitted!")
-  e.preventDefault();
+  e.preventDefault()
 })
 
 //FUNCTIONS
+
+var hide = function(id){
+  var element = document.getElementById(id);
+  element.className = "hidden"
+}
+
+var display = function(id){
+  var element = document.getElementById(id);
+  element.classList.remove("hidden")
+}
 
 //Loops through the form elements creating an object of data to be sent off and processed
 var formData = function(){
@@ -138,7 +161,7 @@ var createItems = function(name, highlights, description, id ,image, elementCont
   }
 
     rowDiv.className = "row"
-    colDiv1.className ="col-md-2 col-md-offset-1 align-center"
+    colDiv1.className ="col-md-2 col-md-offset-1 padding-left"
     colDiv2.className = "col-md-4"
 
     colDiv1.appendChild(colText)
@@ -157,7 +180,7 @@ var createItems = function(name, highlights, description, id ,image, elementCont
     if(elementContainer == "cart"){
       console.log("Not adding in the ADD LINK")
     } else {
-      aLink.className = "align-center"
+      aLink.className = "padding-left"
       aLink.id = id
       aLink.href = "/";
       aLink.appendChild(aLinkText);

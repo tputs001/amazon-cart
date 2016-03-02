@@ -7,11 +7,10 @@
     <link href="default.css" type="text/stylesheet" rel="stylesheet">
   </head>
   <body>
-    <div class="container-fluid title-container">
-      BACKGROUND IMAGE
-      <div class="row display" id="main-row">
+    <div class="container-fluid">
+      <div class="row" id="title-container">
         <div class="col-md-12" id="main-title">
-          A BIG TITLE
+          <h1>Inspire</h1>
         </div>
         <div class="col-md-offset-3 col-md-6" id="search-bar">
           <form>
@@ -24,46 +23,24 @@
           </form>
         </div>
       </div>
-      <div class="row display" id="title-container-bottom">
-        <div class="col-md-4">
-          hello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hello
-          hello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hello
-        </div>
-        <div class="col-md-4">
-          hello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hello
-        </div>
-        <div class="col-md-4">
-          hello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hellohello hello
-        </div>
-      </div>
       <!-- ITEM DESCRIPTION HTML MARK UP! -->
-      <div class="row items-container" id="items">
+      <div class="row items-container hidden" id="items">
+        <div class="col-md-offset-3 col-md-6">
+          <form>
+            <div class="form-group">
+              <label for="search"></label>
+              <input class="form-control" id="input-search2" type="search" placeholder="Enter your search">
+            </div>
+          </form>
+        </div>
         <div class="col-md-offset-3 col-md-6">
           <h1> Items Found </h1><hr>
         </div>
-        <div>Items in Cart: <a href ="/" id="checkout"><span id="number">0</span></a></div>
+        <div class="col-md-2">Items in Cart: <a href ="/" id="checkout"><span id="number">0</span></a></div>
         <div class="col-md-12" id="display-container">
-          <!-- <div class="row">
-            <div class="col-md-2 col-md-offset-1">
-              Title1 item description
-            </div>
-            <div class="col-md-4">
-              Title1 item description Title1 item description
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-1 col-md-offset-1 item-picture">
-              <img src="images/test.png" alt="test picture" title="item image">
-              <span id="item1">Item1</span>
-            </div>
-            <div class="col-md-8 col-md-offset-1" style="padding-top: 10px;">
-              Item descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem description
-              Item descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem descriptionItem description
-            </div>
-          </div> -->
         </div>
       </div>
-      <div class="row" id="payment-container">
+      <div class="row hidden" id="payment-container">
         <div class="col-md-12">
           <h1>Payment</h1></hr>
           <div class="panel panel-default width center">
@@ -91,7 +68,7 @@
             </div>
             <div class="panel-body">
               <form id="creditCard">
-                <div class= "form-group col-md-5 display-inline">
+                <div class= "form-group col-md-5">
                   <label for="firstName">First Name</label>
                   <input type="text" class="form-control" id="firstName" placeholder="Name">
                 </div>
