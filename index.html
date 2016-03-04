@@ -25,8 +25,8 @@
       </div>
     </div>
       <!-- ITEM DESCRIPTION HTML MARK UP! -->
-    <div class="container">
-      <div class="row items-container hidden" id="items">
+    <div class="container hidden" id="items">
+      <div class="row">
         <div class="col-md-offset-3 col-md-6">
           <form>
             <div class="form-group">
@@ -35,16 +35,22 @@
             </div>
           </form>
         </div>
-        <div class="col-md-offset-3 col-md-6">
-          <h1> Items Found </h1><hr>
+      </div>
+      <div class = "row">
+        <div class="col-md-2 align-center">
+          <i class="fa fa-3x fa-home" id="home"></i>
+          <a href="/"><i class="fa fa-arrow-circle-o-left fa-3x" id="back"></i></a>
+        </div>
+        <div class="col-md-offset-1 col-md-6">
+          <h1 style="display: inline"> Items Found </h1><hr>
         </div>
         <div class="col-md-2">Items in Cart: <a href ="/" id="checkout"><span id="number">0  </span><i class="fa fa-shopping-cart"></i></a></div>
-        <div class="col-md-12" id="display-container">
-        </div>
+      </div>
+      <div class="col-md-12" id="display-container">
       </div>
     </div>
-    <div class="container-fluid">
-      <div class="row hidden" id="payment-container">
+    <div class="container hidden" id="payment-container">
+      <div class="row">
         <div class="col-md-12">
           <h1 class="align-center">Payment</h1></hr>
           <div class="panel panel-default width center">
