@@ -61,10 +61,14 @@ var search = function(item){
 var addEvent = function(id){
   var elementId = document.getElementById(id)
   var addedCount = document.getElementById("number")
+  var itemObject = {}
   elementId.addEventListener('click', function(e){
-    addedItems.push(id)
-    alert("Added to cart!")
-    addedCount.innerHTML = addedItems.length
+    itemObject = {
+                  id: id,
+                  quantity: e.target.nextSibling.value
+                }
+    addedObjects.push(itemObject)
+    addedCount.innerHTML = objectAddProperty(addedObjects, "quantity")
     e.preventDefault()
   })
 }
@@ -84,7 +88,7 @@ var createItems = function(name, highlights, description, id ,image, elementCont
     , colText2 = d.createTextNode(highlights)
     , aLinkText = d.createTextNode("Add Cart")
     , aLinkText2 = d.createTextNode("Delete")
-    , aLinkAttr = d.createAttribute("data")
+    , selectElement = d.createElement("select")
     , innerContainer = d.getElementById(elementContainer)
 
   var listFunction = function(array){
@@ -95,45 +99,63 @@ var createItems = function(name, highlights, description, id ,image, elementCont
       colDiv2.appendChild(list)
     }
   }
-
   var appendFunction = function(row, col , rowClass, colClass, colText){
     row.className = rowClass
     col.className = colClass
     col.appendChild(colText)
     row.appendChild(col)
   }
+  var selectFunction = function(select, value, colDiv){
+    for(var i = 0; i<= value; i++){
+      var optionName = "option" + i
+      var optionName = d.createElement("option")
+      optionName.value = i
+      select.className = "quantity"
+      optionName.appendChild(d.createTextNode(i))
+      select.appendChild(optionName)
+      colDiv.appendChild(select)
+    }
+  }
+
+  var imgLinkFunction = function(imgElement, image, col, aLink, id){
+    col.appendChild(imgElement)
+    imgElement.src = image
+    imgElement.className = "img-responsive"
+    aLink.id = id
+    aLink.className = "padding-right"
+    aLink.href = "#"
+    col.appendChild(aLink)
+    if(elementContainer == "display-container"){
+      aLink.appendChild(aLinkText)
+      selectFunction(selectElement, 5, colDiv1)
+    } else {
+      aLink.appendChild(aLinkText2)
+    }
+  }
 
   appendFunction(rowDiv, colDiv1, "row", "col-md-1 col-md-offset-1 align-center box-size", colText)
   appendFunction(rowDiv, colDiv2, "row", "col-md-8 col-md-offset-1", colText2)
-  colDiv1.appendChild(imgElement)
-  imgElement.src = image
-  aLink.id = id
-  aLink.href = "#"
-  aLinkAttr.value = id
-  aLink.setAttributeNode(aLinkAttr)
-  elementContainer == "cart" ? aLink.appendChild(aLinkText2) : aLink.appendChild(aLinkText)
-  colDiv1.appendChild(aLink)
+  imgLinkFunction(imgElement, image, colDiv1, aLink, id)
   listFunction(description)
   innerContainer.appendChild(rowDiv)
   innerContainer.appendChild(hr)
 }
 
-
 //PAYMENT-CONTAINER PAGE
 //checks items added to the cart
-var addedItems = []
+var addedObjects = []
 var itemsInCart = function(id_target){
   var sub_total = 0;
-  for(var i = 0; i < addedItems.length; i++){
+  for(var i = 0; i < addedObjects.length; i++){
     for(var j = 0; j < data.length; j++){
-      if (addedItems[i] == data[j].id){
+      if (addedObjects[i].id == data[j].id){
         var prop = data[j]
         var productName = prop.name
         var highlights = prop.highlights
         var description = prop.description
         var id = prop.id
         var image = prop.image
-        sub_total += prop.price;
+        sub_total += (prop.price * addedObjects[i].quantity);
         createItems(productName, highlights, description, id, image, id_target)
       }
     }
@@ -146,10 +168,10 @@ var addDeleteEvent = function(id){
   var elementId = document.getElementById(id);
   elementId.addEventListener('click', function(e){
     if(e.target.nodeName == "A"){
-      var itemToRemove = e.srcElement.attributes.data.textContent
-      var itemPosition = addedItems.indexOf(itemToRemove);
-      if(itemPosition > -1){
-        addedItems.splice(itemPosition, 1);
+      var itemToRemove = e.target.id
+      var objectPosition = objectIndexOf(addedObjects, itemToRemove, "id")
+      if(objectPosition > -1){
+        addedObjects.splice(objectPosition, 1);
       }
     }
     clearDom(deleteItem)
@@ -165,7 +187,6 @@ var formData = function(){
   for(var i = 0; i<elements.length; i++){
     dataObject[elements[i].id] = elements[i].value;
   }
-  console.log(dataObject);
   return dataObject
 }
 
@@ -192,7 +213,6 @@ var clearDom = function(clearId){
   while(clearId.hasChildNodes()){
     clearId.removeChild(clearId.lastChild)
   }
-  console.log(clearId)
 }
 
 //Hide containers
@@ -216,4 +236,23 @@ var formatting = function(number){
     var formatted = '$' + numToString
   }
   return formatted
+}
+
+//Function for indexOf Objects
+var objectIndexOf = function(objectArray, id, property){
+  for(var i = 0; i < objectArray.length; i++){
+    if(objectArray[i][property] == id){
+      return i
+    }
+  }
+  return -1
+}
+
+//Function for adding an array of object one single property.
+var objectAddProperty = function(objectArray, property){
+  var sum = 0
+  for(var i = 0; i < objectArray.length; i++){
+    sum += parseInt(objectArray[i][property])
+  }
+  return sum
 }
