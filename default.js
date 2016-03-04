@@ -106,7 +106,7 @@ var createItems = function(name, highlights, description, id ,image, elementCont
     row.appendChild(col)
   }
   var selectFunction = function(select, value, colDiv){
-    for(var i = 0; i<= value; i++){
+    for(var i = 1; i<= value; i++){
       var optionName = "option" + i
       var optionName = d.createElement("option")
       optionName.value = i
@@ -120,7 +120,7 @@ var createItems = function(name, highlights, description, id ,image, elementCont
   var imgLinkFunction = function(imgElement, image, col, aLink, id){
     col.appendChild(imgElement)
     imgElement.src = image
-    imgElement.className = "img-responsive"
+    imgElement.className = "img-responsive img-test"
     aLink.id = id
     aLink.className = "padding-right"
     aLink.href = "#"
@@ -133,7 +133,7 @@ var createItems = function(name, highlights, description, id ,image, elementCont
     }
   }
 
-  appendFunction(rowDiv, colDiv1, "row", "col-md-1 col-md-offset-1 align-center box-size", colText)
+  appendFunction(rowDiv, colDiv1, "row", "col-md-2 align-center box-size", colText)
   appendFunction(rowDiv, colDiv2, "row", "col-md-8 col-md-offset-1", colText2)
   imgLinkFunction(imgElement, image, colDiv1, aLink, id)
   listFunction(description)
@@ -230,11 +230,7 @@ var display = function(id){
 //Formatting for the numbers by adding commas
 var formatting = function(number){
   var numToString = number.toString();
-  if(numToString >= 1000){
-    var formatted = '$' + numToString.charAt(0) + ',' + numToString.slice(1, numToString.length)
-  } else {
-    var formatted = '$' + numToString
-  }
+  var formatted = numToString >= 1000 ? '$' + numToString.charAt(0) + ',' + numToString.slice(1, numToString.length) : '$' + numToString
   return formatted
 }
 
