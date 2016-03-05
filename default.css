@@ -39,6 +39,23 @@ body, html {
   top: 10px;
 }
 
+#icon {
+  margin-left: 7%;
+}
+
+#icon > h1 {
+  display: inline;
+  padding-left: 30%
+}
+
+#icon > i {
+  padding: 5px;
+}
+
+#item-h1 {
+  display: inline;
+}
+
 #title-container {
   background: url("images/background.png") no-repeat;
   background-position: top;
