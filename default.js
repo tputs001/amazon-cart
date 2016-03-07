@@ -30,7 +30,6 @@ checkOut.addEventListener('click', function(e){
   clearDom(deleteItem)
   itemsInCart("cart");
   toggleDisplay("payment-container")
-  addDeleteEvent("cart")
   e.preventDefault();
 })
 
@@ -55,7 +54,6 @@ home.addEventListener('click', function(e){
 })
 
 //FUNCTIONS
-
 //MAIN TITLE CONTAINER PAGE
 //Search the data object based on the input value of the user
 var searchItem = function(item){
@@ -70,14 +68,13 @@ var searchItem = function(item){
       var price = prop.price
       createItems(productName, highlights, description, id, image, price, "display-container")
       addCart(id)
-      console.log("boom!")
     }
   }
 }
 
 //ITEM DESCRIPTION PAGE
 //Create several divs and columns that will append in the item container values from the data object.
-var createItems = function(name, highlights, description, id ,image, price, elementContainer){
+var createItems = function(name, highlights, description, id ,image, price, elementContainer, quantity){
   var d = document
     , rowDiv = d.createElement("div")
     , colDiv1 = d.createElement("div")
@@ -85,6 +82,7 @@ var createItems = function(name, highlights, description, id ,image, price, elem
     , list = d.createElement("li")
     , imgElement = d.createElement("img")
     , aLink = d.createElement("a")
+    , deleteLink = d.createElement("a")
     , hr = d.createElement("hr")
     , strong = d.createElement("strong")
     , colText = d.createTextNode(name)
@@ -92,7 +90,7 @@ var createItems = function(name, highlights, description, id ,image, price, elem
     , colText2 = d.createTextNode(highlights)
     , colText3 = d.createTextNode("$" + price + "   -   ")
     , aLinkText = d.createTextNode("Add Cart")
-    , aLinkText2 = d.createTextNode("Delete")
+    , deleteLinkText2 = d.createTextNode("Delete")
     , selectElement = d.createElement("select")
     , innerContainer = d.getElementById(elementContainer)
 
@@ -122,26 +120,30 @@ var createItems = function(name, highlights, description, id ,image, price, elem
     }
   }
 
-  var imgLinkFunction = function(imgElement, image, col, aLink, id){
+  var imgLinkFunction = function(imgElement, image, col, aLink, deleteLink, id){
     col.appendChild(imgElement)
     imgElement.src = image
     imgElement.className = "img-responsive img-test"
-    aLink.id = id
-    aLink.className = "padding-right"
-    aLink.href = "#"
-    col.appendChild(aLink)
     if(elementContainer == "display-container"){
+      aLink.id = id
+      aLink.className = "padding-right"
+      aLink.href = "#"
+      col.appendChild(aLink)
       aLink.appendChild(aLinkText)
       selectFunction(selectElement, 5, colDiv1)
     } else {
-      aLink.appendChild(aLinkText2)
+      col.appendChild(deleteLink)
+      deleteLink.id = (id + "delete")
+      deleteLink.href = "#"
+      deleteLink.appendChild(deleteLinkText2)
+      selectFunction(selectElement, quantity, colDiv1)
     }
   }
   strong.appendChild(colText3)
   appendFunction(rowDiv, colDiv1, "row", "col-md-2 align-center box-size", colText)
   appendFunction(rowDiv, colDiv2, "row", "col-md-8 col-md-offset-1", strong)
   appendFunction(rowDiv, colDiv2, "row", "col-md-8 col-md-offset-1", colText2)
-  imgLinkFunction(imgElement, image, colDiv1, aLink, id)
+  imgLinkFunction(imgElement, image, colDiv1, aLink, deleteLink, id)
   listFunction(description)
   innerContainer.appendChild(rowDiv)
   innerContainer.appendChild(hr)
@@ -155,20 +157,44 @@ var createItems = function(name, highlights, description, id ,image, price, elem
     elementId.addEventListener('click', function(e){
       itemObject = {
         id: id,
-        quantity: e.target.nextSibling.value
+        quantity: parseInt(e.target.nextSibling.value)
       }
-      addedObjects.push(itemObject)
+
+      if(addedObjects.length == 0){
+        addedObjects.push(itemObject)
+        console.log("added first item")
+      } else if(valueCheck(addedObjects, id)){
+        addedObjects.forEach(function(items){
+          if(items.id == id){
+            items.quantity += itemObject.quantity
+            console.log("updated quantity")
+            return;
+          }
+        })
+      } else {
+        addedObjects.push(itemObject)
+        console.log("no item found, pushed new data")
+      }
       console.log(addedObjects)
       addedCount.innerHTML = objectAddProperty(addedObjects, "quantity")
       e.preventDefault()
     })
   }
 
+  var valueCheck = function(object, id){
+    var status = false;
+    object.forEach(function(items){
+      if(items.id === id){
+        status = true
+      }
+    })
+    return status
+  }
+
 //PAYMENT-CONTAINER PAGE
 //checks items added to the cart
 var addedObjects = []
 var itemsInCart = function(id_target){
-  console.log(addedObjects)
   var sub_total = 0;
   for(var i = 0; i < addedObjects.length; i++){
     for(var j = 0; j < data.length; j++){
@@ -180,8 +206,9 @@ var itemsInCart = function(id_target){
         var id = prop.id
         var image = prop.image
         var price = prop.price
-        sub_total += (price * addedObjects[i].quantity);
-        createItems(productName, highlights, description, id, image, price, id_target)
+        sub_total += (price * addedObjects[i].quantity)
+        createItems(productName, highlights, description, id, image, price, id_target, addedObjects[i].quantity)
+        deleteEvent(id + 'delete')
       }
     }
   }
@@ -189,20 +216,32 @@ var itemsInCart = function(id_target){
 }
 
 //addDelete Event Listener to each delete link elements.
-var addDeleteEvent = function(id){
+var deleteEvent = function(id){
   var elementId = document.getElementById(id);
-  // console.log(elementId.)
   elementId.addEventListener('click', function(e){
     if(e.target.nodeName == "A"){
-      var itemToRemove = e.target.id
-      var objectPosition = objectIndexOf(addedObjects, itemToRemove, "id")
-      if(objectPosition > -1){
-        addedObjects.splice(objectPosition, 1);
-      }
+      var id = e.target.id
+      var itemToRemove = id.slice(0, (id.length - 6))
+      removeItem(e, id, itemToRemove)
     }
     clearDom(deleteItem)
     itemsInCart("cart")
   })
+}
+
+//Remove items from the cart
+var removeItem = function(e, id, itemToRemove){
+  addedObjects.forEach(function(items){
+    if(items.id == itemToRemove){
+      if(items.quantity == e.target.nextSibling.value){
+          var objectPosition = objectIndexOf(addedObjects, itemToRemove, "id")
+          addedObjects.splice(objectPosition, 1)
+      } else {
+        items.quantity -= e.target.nextSibling.value
+      }
+    }
+  })
+  console.log(addedObjects)
 }
 
 //Loops through the form elements creating an object of data to be sent off and processed
@@ -252,16 +291,13 @@ var formatting = function(number){
 var objectIndexOf = function(objectArray, id, property){
   for(var i = 0; i < objectArray.length; i++){
     if(objectArray[i][property] == id){
-      console.log("This is the objectArray Value " + objectArray[i][property])
-      console.log("This is the id value " + id)
-      console.log("i")
       return i
     }
   }
   return -1
 }
 
-//Function for adding an array of object one single property.
+//Sums up the total value of the specified object value
 var objectAddProperty = function(objectArray, property){
   var sum = 0
   for(var i = 0; i < objectArray.length; i++){
