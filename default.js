@@ -1,4 +1,3 @@
-// EVENT LISTENERS
 var displayId = document.getElementById("display-container")
 var searchButton = document.getElementById("search-button")
 var searchInput2 = document.getElementById("input-search2")
@@ -8,7 +7,9 @@ var formSubmission = document.getElementById("formSubmit")
 var back = document.getElementById("back")
 var back2 = document.getElementById("back2")
 var home = document.getElementById("home")
+var addedObjects = []
 
+// EVENT LISTENERS
 searchButton.addEventListener('click', function(e){
   var itemSearched = document.getElementById("input-search").value.toLowerCase();
   clearDom(displayId)
@@ -48,10 +49,20 @@ back2.addEventListener('click', function(e){
   e.preventDefault()
 })
 
-home.addEventListener('click', function(e){
-  toggleDisplay("title")
-  e.preventDefault()
+
+displayId.addEventListener('click', function(e){
+  console.log(e.target.id)
+  var modalBody = document.getElementById("modalBody")
+  console.log(data)
+  data.forEach(function(items){
+    if(items.id == "macbook"){
+      modalBody.innerHTML = items.review
+    }
+  })
+  console.log(modalBody)
 })
+
+
 
 //FUNCTIONS
 //MAIN TITLE CONTAINER PAGE
@@ -66,7 +77,8 @@ var searchItem = function(item){
       var id = prop.id
       var image = prop.image
       var price = prop.price
-      createItems(productName, highlights, description, id, image, price, "display-container")
+      var stars = prop.stars
+      createItems(productName, highlights, description, id, image, price, "display-container", stars)
       addCart(id)
     }
   }
@@ -74,41 +86,39 @@ var searchItem = function(item){
 
 //ITEM DESCRIPTION PAGE
 //Create several divs and columns that will append in the item container values from the data object.
-var createItems = function(name, highlights, description, id ,image, price, elementContainer, quantity){
+var createItems = function(name, highlights, description, id ,image, price, elementContainer, stars, quantity){
   var d = document
     , rowDiv = d.createElement("div")
     , colDiv1 = d.createElement("div")
     , colDiv2 = d.createElement("div")
-    , list = d.createElement("li")
-    , imgElement = d.createElement("img")
-    , aLink = d.createElement("a")
-    , deleteLink = d.createElement("a")
     , hr = d.createElement("hr")
     , strong = d.createElement("strong")
     , colText = d.createTextNode(name)
-    , listText = d.createTextNode(description)
     , colText2 = d.createTextNode(highlights)
     , colText3 = d.createTextNode("$" + price + "   -   ")
-    , aLinkText = d.createTextNode("Add Cart")
-    , deleteLinkText2 = d.createTextNode("Delete")
-    , selectElement = d.createElement("select")
+    , colText4 = d.createTextNode("**********")
     , innerContainer = d.getElementById(elementContainer)
-
-  var listFunction = function(array){
+    , columnClass = "col-md-8 col-md-offset-1"
+    , imgClass = "col-md-2 align-center box-size"
+    , rowClass = "row"
+  var list = function(array){
     for(i=0; i<array.length; i++){
       var list = d.createElement("li")
+      var space = d.createElement("br")
       var listText = d.createTextNode(array[i])
       list.appendChild(listText)
       colDiv2.appendChild(list)
     }
+    colDiv2.appendChild(space)
   }
-  var appendFunction = function(row, col , rowClass, colClass, colText){
+  var append = function(row, col, rowClass, colClass, colText){
     row.className = rowClass
     col.className = colClass
     col.appendChild(colText)
     row.appendChild(col)
   }
-  var selectFunction = function(select, value, colDiv){
+  var select = function(value, colDiv){
+    var select = d.createElement("select")
     for(var i = 1; i<= value; i++){
       var optionName = "option" + i
       var optionName = d.createElement("option")
@@ -119,81 +129,107 @@ var createItems = function(name, highlights, description, id ,image, price, elem
       colDiv.appendChild(select)
     }
   }
-
-  var imgLinkFunction = function(imgElement, image, col, aLink, deleteLink, id){
-    col.appendChild(imgElement)
-    imgElement.src = image
-    imgElement.className = "img-responsive img-test"
+  var links = function(text, id, className, href, col, modal){
+    var element = d.createElement("a")
+    var linkText = d.createTextNode(text)
+    var divLink = d.createElement("div")
+    element.id = id
+    element.className = className
+    element.href = "#"
+    if(modal != undefined){
+      var dataAttr = document.createAttribute("data-toggle")
+      var dataAttr1 = document.createAttribute("data-target")
+      dataAttr.value = modal
+      dataAttr1.value = "#myModal"
+      element.setAttributeNode(dataAttr)
+      element.setAttributeNode(dataAttr1)
+    }
+    element.appendChild(linkText)
+    col.appendChild(element)
+  }
+  var img = function(image, col, id){
+    var element = d.createElement("img")
+    col.appendChild(element)
+    element.src = image
+    element.className = "img-responsive img-test"
     if(elementContainer == "display-container"){
-      aLink.id = id
-      aLink.className = "padding-right"
-      aLink.href = "#"
-      col.appendChild(aLink)
-      aLink.appendChild(aLinkText)
-      selectFunction(selectElement, 5, colDiv1)
+      links("Add Cart", id, "divLink", '#', col)
+      select(9, col)
+
     } else {
-      col.appendChild(deleteLink)
-      deleteLink.id = (id + "delete")
-      deleteLink.href = "#"
-      deleteLink.appendChild(deleteLinkText2)
-      selectFunction(selectElement, quantity, colDiv1)
+      var deleteId = (id + "delete")
+      links("Delete", deleteId, "divLink", "#", col)
+      select(quantity, col)
     }
   }
+  var rating = function(col, stars){
+    var divRating = d.createElement("div")
+    var fullStars = stars
+    divRating.className = "rating"
+    for(var i = 0; i < 5; i++){
+      var element = d.createElement("i")
+      if(fullStars > 0){
+        element.className = "fa fa-star fa-2x stars"
+        fullStars -= 1;
+      } else {
+        element.className = "fa fa-star-o fa-2x stars"
+      }
+      divRating.appendChild(element)
+    }
+    col.appendChild(divRating)
+  }
+  var review = function(id) {
+    var reviewId = id + "review"
+    var writeId = id + "write"
+    links("Read a review", reviewId, "divLink", "#", colDiv2, "modal")
+    links("Write a review", writeId, "divLink", "#", colDiv2, "modal")
+  }
+
   strong.appendChild(colText3)
-  appendFunction(rowDiv, colDiv1, "row", "col-md-2 align-center box-size", colText)
-  appendFunction(rowDiv, colDiv2, "row", "col-md-8 col-md-offset-1", strong)
-  appendFunction(rowDiv, colDiv2, "row", "col-md-8 col-md-offset-1", colText2)
-  imgLinkFunction(imgElement, image, colDiv1, aLink, deleteLink, id)
-  listFunction(description)
+  append(rowDiv, colDiv1, rowClass, imgClass, colText)
+  append(rowDiv, colDiv2, rowClass, columnClass, strong)
+  append(rowDiv, colDiv2, rowClass, columnClass, colText2)
+  img(image, colDiv1, id)
+  list(description)
+  rating(colDiv1, stars)
+  review(id)
   innerContainer.appendChild(rowDiv)
   innerContainer.appendChild(hr)
 }
 
 //AddEventListeners dynamically to each <a> tags generated by a search.
-  var addCart = function(id){
-    var elementId = document.getElementById(id)
-    var addedCount = document.getElementById("number")
-    var itemObject = {}
-    elementId.addEventListener('click', function(e){
-      itemObject = {
-        id: id,
-        quantity: parseInt(e.target.nextSibling.value)
-      }
-
-      if(addedObjects.length == 0){
-        addedObjects.push(itemObject)
-        console.log("added first item")
-      } else if(valueCheck(addedObjects, id)){
-        addedObjects.forEach(function(items){
-          if(items.id == id){
-            items.quantity += itemObject.quantity
-            console.log("updated quantity")
-            return;
-          }
-        })
-      } else {
-        addedObjects.push(itemObject)
-        console.log("no item found, pushed new data")
-      }
-      console.log(addedObjects)
-      addedCount.innerHTML = objectAddProperty(addedObjects, "quantity")
-      e.preventDefault()
-    })
-  }
-
-  var valueCheck = function(object, id){
-    var status = false;
-    object.forEach(function(items){
-      if(items.id === id){
-        status = true
-      }
-    })
-    return status
-  }
+var addCart = function(id){
+  var elementId = document.getElementById(id)
+  var addedCount = document.getElementById("number")
+  var itemObject = {}
+  elementId.addEventListener('click', function(e){
+    itemObject = {
+      id: id,
+      quantity: parseInt(e.target.nextSibling.value)
+    }
+    if(addedObjects.length == 0){
+      addedObjects.push(itemObject)
+      console.log("added first item")
+    } else if(valueCheck(addedObjects, id)){
+      addedObjects.forEach(function(items){
+        if(items.id == id){
+          items.quantity += itemObject.quantity
+          console.log("updated quantity")
+          return;
+        }
+      })
+    } else {
+      addedObjects.push(itemObject)
+      console.log("no item found, pushed new data")
+    }
+    console.log(addedObjects)
+    addedCount.innerHTML = objectAddProperty(addedObjects, "quantity")
+    e.preventDefault()
+  })
+}
 
 //PAYMENT-CONTAINER PAGE
 //checks items added to the cart
-var addedObjects = []
 var itemsInCart = function(id_target){
   var sub_total = 0;
   for(var i = 0; i < addedObjects.length; i++){
@@ -349,4 +385,15 @@ var toggleDisplay = function(state){
     itemClasses.className = addClass(itemClasses.classList, "hidden")
     paymentClasses.classList.remove("hidden")
   }
+}
+
+//Checks to see if a value exists
+var valueCheck = function(object, id){
+  var status = false;
+  object.forEach(function(items){
+    if(items.id === id){
+      status = true
+    }
+  })
+  return status
 }
