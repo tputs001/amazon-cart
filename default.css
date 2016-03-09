@@ -25,20 +25,18 @@ body, html {
   margin: 0 auto;
 }
 
+#stars {
+}
+
 .stars {
   display: inline;
-  margin-top: 15px;
   color: yellow;
   -webkit-text-stroke-width: 0.5px;
   -webkit-text-stroke-color: black;
 }
 
-.reviewLink {
-  margin: 10px 5px 0 0;
-}
-
-.rating {
-  padding-top: 1em;
+#starContainer {
+  padding-top: 10px;
 }
 
 #total {

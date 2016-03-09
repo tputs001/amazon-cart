@@ -7,6 +7,9 @@ var formSubmission = document.getElementById("formSubmit")
 var back = document.getElementById("back")
 var back2 = document.getElementById("back2")
 var home = document.getElementById("home")
+var reviewSubmit = document.getElementById("reviewSubmit")
+var review = document.getElementById("reviewText")
+// var review = document.getElementById("review")
 var addedObjects = []
 
 // EVENT LISTENERS
@@ -15,14 +18,15 @@ searchButton.addEventListener('click', function(e){
   clearDom(displayId)
   searchItem(itemSearched)
   toggleDisplay("items")
+  reviewListener()
   e.preventDefault()
 })
 
 searchInput2.addEventListener('keypress', function(e){
   if(e.keyCode == 13){
-    console.log(e)
     clearDom(displayId)
     searchItem(this.value)
+    reviewListener()
     e.preventDefault()
   }
 })
@@ -49,20 +53,89 @@ back2.addEventListener('click', function(e){
   e.preventDefault()
 })
 
+var appendModal = function(rowClass, colClass, col2Class, itemRating, itemReview){
+  var modalBody = document.getElementById("modalContainer")
+  var modalContainer = document.createElement("div")
+  var modalStar = document.createElement("div")
+  var modalReview = document.createElement("div")
+  var starText = document.createTextNode(itemRating)
+  var reviewText = document.createTextNode(itemReview)
+  var hr = document.createElement("hr")
 
-displayId.addEventListener('click', function(e){
-  console.log(e.target.id)
-  var modalBody = document.getElementById("modalBody")
-  console.log(data)
-  data.forEach(function(items){
-    if(items.id == "macbook"){
-      modalBody.innerHTML = items.review
+  var fullStars = itemRating
+  for(var i = 0; i < 5; i++){
+    var element = document.createElement("i")
+    if(fullStars > 0){
+      element.className = "fa fa-star fa-2x stars"
+      fullStars -= 1;
+    } else {
+      element.className = "fa fa-star-o fa-2x stars"
     }
-  })
-  console.log(modalBody)
-})
+    modalStar.appendChild(element)
+  }
 
+  modalContainer.className = rowClass
+  modalStar.className = colClass
+  modalReview.className = col2Class
+  modalReview.appendChild(reviewText)
+  modalContainer.appendChild(modalStar)
+  modalContainer.appendChild(modalReview)
+  modalBody.appendChild(modalContainer)
+  modalBody.appendChild(hr)
+}
 
+var reviewListener = function(){
+  var reviewClass = document.getElementsByClassName("divLink")
+  for(var i = 0; i<reviewClass.length; i++){
+    reviewClass[i].addEventListener('click', function(e){
+      clearDom(modalContainer)
+      var index = ((e.target.id.length - 6) * -1)
+      var clickType = e.target.id.slice(e.target.id, 6)
+      var clickName = e.target.id.slice(index)
+      console.log(clickType)
+      if(clickType == "review"){
+        data.forEach(function(items){
+          if(items.id == clickName){
+            items["review"].forEach(function(review){
+              appendModal("row","col-md-4", "col-md-8", review.rating, review.review)
+            })
+          }
+        })
+      } else if (clickType == "create"){
+        console.log(clickName)
+        var reviewObject = {}
+        var dataFunction = function(event){
+          data.forEach(function(items){
+            if(items.id == clickName){
+              reviewObject = {rating: 5, review: review.value}
+              items.review.push(reviewObject)
+              reviewObject = {}
+              review.value = ""
+            }
+          })
+          reviewSubmit.removeEventListener('click', dataFunction, false)
+        }
+        reviewSubmit.addEventListener('click', dataFunction, false)
+      }
+    })
+  }
+}
+var ratings = function(col, rating, id){
+  var divRating = document.createElement("div")
+  divRating.id = id
+  var fullStars = rating
+  for(var i = 0; i < 5; i++){
+    var element = document.createElement("i")
+    if(fullStars > 0){
+      element.className = "fa fa-star fa-2x stars"
+      fullStars -= 1;
+    } else {
+      element.className = "fa fa-star-o fa-2x stars"
+    }
+    divRating.appendChild(element)
+  }
+  col.appendChild(divRating)
+}
 
 //FUNCTIONS
 //MAIN TITLE CONTAINER PAGE
@@ -71,14 +144,14 @@ var searchItem = function(item){
   for(var i = 0; i<data.length; i++){
     if((data[i].category).indexOf(item) !== -1 || data[i].keyword == item){
       var prop = data[i]
-      var productName = prop.name
+      var name = prop.name
       var highlights = prop.highlights
       var description = prop.description
       var id = prop.id
       var image = prop.image
       var price = prop.price
       var stars = prop.stars
-      createItems(productName, highlights, description, id, image, price, "display-container", stars)
+      createItems(name, highlights, description, id, image, price, "display-container", stars)
       addCart(id)
     }
   }
@@ -129,23 +202,24 @@ var createItems = function(name, highlights, description, id ,image, price, elem
       colDiv.appendChild(select)
     }
   }
-  var links = function(text, id, className, href, col, modal){
+  var links = function(text, id, className, href, col, modal, modalId){
     var element = d.createElement("a")
     var linkText = d.createTextNode(text)
-    var divLink = d.createElement("div")
+    var divContainer = d.createElement("div")
+    divContainer.className = className
     element.id = id
-    element.className = className
     element.href = "#"
     if(modal != undefined){
       var dataAttr = document.createAttribute("data-toggle")
       var dataAttr1 = document.createAttribute("data-target")
       dataAttr.value = modal
-      dataAttr1.value = "#myModal"
+      dataAttr1.value = modalId
       element.setAttributeNode(dataAttr)
       element.setAttributeNode(dataAttr1)
     }
     element.appendChild(linkText)
-    col.appendChild(element)
+    divContainer.appendChild(element)
+    col.appendChild(divContainer)
   }
   var img = function(image, col, id){
     var element = d.createElement("img")
@@ -162,27 +236,11 @@ var createItems = function(name, highlights, description, id ,image, price, elem
       select(quantity, col)
     }
   }
-  var rating = function(col, stars){
-    var divRating = d.createElement("div")
-    var fullStars = stars
-    divRating.className = "rating"
-    for(var i = 0; i < 5; i++){
-      var element = d.createElement("i")
-      if(fullStars > 0){
-        element.className = "fa fa-star fa-2x stars"
-        fullStars -= 1;
-      } else {
-        element.className = "fa fa-star-o fa-2x stars"
-      }
-      divRating.appendChild(element)
-    }
-    col.appendChild(divRating)
-  }
   var review = function(id) {
-    var reviewId = id + "review"
-    var writeId = id + "write"
-    links("Read a review", reviewId, "divLink", "#", colDiv2, "modal")
-    links("Write a review", writeId, "divLink", "#", colDiv2, "modal")
+    var reviewId = "review" + id
+    var writeId = "create" + id
+    links("Read a review", reviewId, "divLink", "#", colDiv2, "modal", "#myModal")
+    links("Write a review", writeId, "divLink", "#", colDiv2, "modal", "#writeModal")
   }
 
   strong.appendChild(colText3)
@@ -191,7 +249,7 @@ var createItems = function(name, highlights, description, id ,image, price, elem
   append(rowDiv, colDiv2, rowClass, columnClass, colText2)
   img(image, colDiv1, id)
   list(description)
-  rating(colDiv1, stars)
+  ratings(colDiv1, stars, "starContainer")
   review(id)
   innerContainer.appendChild(rowDiv)
   innerContainer.appendChild(hr)
@@ -205,7 +263,7 @@ var addCart = function(id){
   elementId.addEventListener('click', function(e){
     itemObject = {
       id: id,
-      quantity: parseInt(e.target.nextSibling.value)
+      quantity: parseInt(e.target.offsetParent.childNodes[3].value)
     }
     if(addedObjects.length == 0){
       addedObjects.push(itemObject)
@@ -236,14 +294,15 @@ var itemsInCart = function(id_target){
     for(var j = 0; j < data.length; j++){
       if (addedObjects[i].id == data[j].id){
         var prop = data[j]
-        var productName = prop.name
+        var name = prop.name
         var highlights = prop.highlights
         var description = prop.description
         var id = prop.id
         var image = prop.image
         var price = prop.price
+        var stars = prop.stars
         sub_total += (price * addedObjects[i].quantity)
-        createItems(productName, highlights, description, id, image, price, id_target, addedObjects[i].quantity)
+        createItems(name, highlights, description, id, image, price, id_target, stars, addedObjects[i].quantity)
         deleteEvent(id + 'delete')
       }
     }
