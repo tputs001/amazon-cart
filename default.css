@@ -25,7 +25,8 @@ body, html {
   margin: 0 auto;
 }
 
-#stars {
+#checkout {
+  display:inline;
 }
 
 .stars {

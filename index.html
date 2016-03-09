@@ -15,9 +15,9 @@
         <div class="col-md-offset-3 col-md-6 col-xs-6 col-xs-offset-3" id="search-bar">
           <form>
             <div class="form-group">
-              <label for="search"></label>
-              <input class="form-control" id="input-search" type="search" placeholder="Enter your search">
-              <button class="btn btn-default margin-top" id="search-button" type="submit">Search!</button>
+              <label for="searchInput"></label>
+              <input class="form-control" id="searchInput" type="search" placeholder="Enter your search">
+              <button class="btn btn-default margin-top" id="searchClick" type="submit">Search!</button>
               <i class="fa fa-search fa-2x" id="magnifier-icon"></i>
             </div>
           </form>
@@ -31,19 +31,27 @@
           <form>
             <div class="form-group">
               <label for="search"></label>
-              <input class="form-control" id="input-search2" type="search" placeholder="Enter your search">
+              <div class="form-group">
+                <input class="form-control" id="searchInput2" type="search" placeholder="Enter your search">
+                <button class="" id="searchClick2" type="submit" style="display: none">Search!</button>
+              </div>
             </div>
           </form>
         </div>
       </div>
       <div class = "row">
         <div class="col-md-2 align-center">
-          <a href="/"><i class="fa fa-arrow-circle-o-left fa-3x" id="back"></i></a>
+          <a href="#"><i class="fa fa-arrow-circle-o-left fa-3x" id="back" data-state = "title"></i></a>
         </div>
         <div class="col-md-offset-1 col-md-6">
           <h1 id="item-h1"> Items Found </h1><hr>
         </div>
-        <div class="col-md-2">Items in Cart: <a href ="/" id="checkout"><span id="number">0  </span><i class="fa fa-shopping-cart"></i></a></div>
+        <div class="col-md-2">Items in Cart:
+            <span id="number">0 </span>
+            <a href= "#">
+            <i id="checkout" class="fa fa-shopping-cart"></i>
+          </a>
+        </div>
       </div>
       <div class="col-md-12" id="display-container">
       </div>
@@ -80,7 +88,7 @@
               <h3 class="panel-title">Credit Card Information </h3>
             </div>
             <div class="panel-body">
-              <form id="creditCard">
+              <form id="paymentInfo">
                 <div class= "form-group col-md-5">
                   <label for="firstName">First Name</label>
                   <input type="text" class="form-control" id="firstName" placeholder="Name">
