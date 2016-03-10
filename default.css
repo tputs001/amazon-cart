@@ -77,6 +77,11 @@ body, html {
   display: inline;
 }
 
+#confirm {
+  display: inline;
+  padding-left: 10px
+}
+
 #title-container {
   background: url("images/background.png") no-repeat;
   background-position: top;

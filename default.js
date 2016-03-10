@@ -7,14 +7,15 @@ var tempVar;
 // EVENT DELEGATION
 document.body.addEventListener('click', function(e){
   var target = e.target
-  console.log(e)
+  console.log(e.target.classList)
+  // console.log(inObject(target.classList, "home"))
   if(target.id == "searchClick" ){ mainSearch(e) }
   if(target.id == "searchClick2" ){ secondarySearch(e) }
   if(target.textContent == "Add Cart"){ addItems(e) }
   if(target.textContent == "Delete") { deleteItems(e) }
   if(target.id == "checkout") { checkOut(e) }
   if(target.id == "formSubmit") { formData(e) }
-  if(target.id == "back" || target.id == "home") { toggleDisplay(e, "title") }
+  if(target.id == "back" || inObject(target.classList, "home")) { toggleDisplay(e, "title") }
   if(target.id == "back2") { toggleDisplay(e, "items") }
   if(target.nodeName == "BUTTON" && isTrue(target.textContent, "read")){ reviewItems(e) }
   if(target.nodeName == "BUTTON" && isTrue(target.textContent, "write")){ reviewItems(e); tempVar = target.id }
@@ -427,4 +428,17 @@ var isTrue = function(stringName, word){
   var string = stringName.toLowerCase()
   var substring = word
   return (string.indexOf(substring) > -1)
+}
+
+var inObject = function(object, value){
+  for(var i = 0; i< object.length; i++){
+    if(object[i] == value){
+      return true
+    }
+  }
+  // object.forEach(function(item){
+  //   if(item == value){
+  //     return true
+  //   }
+  // })
 }
