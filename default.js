@@ -305,6 +305,7 @@ var itemsInCart = function(id_target){
 
 //Loops through the form elements creating an object of data to be processed for payment
 var formData = function(e){
+  toggleDisplay(e, "confirmation")
   var form = e.target.form.elements
   var dataObject = {}
   for(var i = 0; i<form.length; i++){
@@ -324,8 +325,6 @@ var formData = function(e){
 
   infoPanel.insertAdjacentHTML('beforeend', personalInfo)
   creditPanel.insertAdjacentHTML('beforeend', creditInfo)
-
-  console.log(dataObject)
   return dataObject
   e.preventDefault()
 }
@@ -386,19 +385,28 @@ var toggleDisplay = function(e, state){
   var titleClasses = containers[0]
   var itemClasses = containers[1]
   var paymentClasses = containers[2]
+  var confirmationClasses = containers[3]
 
   if(state == "title"){
     itemClasses.classList.add("hidden")
     paymentClasses.classList.add("hidden")
     titleClasses.classList.remove("hidden")
+    confirmationClasses.classList.add("hidden")
   } else if(state == "items"){
     titleClasses.classList.add("hidden")
     paymentClasses.classList.add("hidden")
     itemClasses.classList.remove("hidden")
+    confirmationClasses.classList.add("hidden")
+  } else if(state == "confirmation"){
+    itemClasses.classList.add("hidden")
+    itemClasses.classList.add("hidden")
+    paymentClasses.classList.add("hidden")
+    confirmationClasses.classList.remove("hidden")
   } else {
     titleClasses.classList.add("hidden")
     itemClasses.classList.add("hidden")
     paymentClasses.classList.remove("hidden")
+    confirmationClasses.classList.add("hidden")
   }
   e.preventDefault()
 }
