@@ -119,11 +119,11 @@
                 </div>
                 <div class="form-group col-md-4">
                   <label for="phone">Phone</label>
-                  <input type="number" class="form-control" id="phone" placeholder="XXX-XXX-XXXX">
+                  <input type="text" class="form-control" id="phone" placeholder="XXX-XXX-XXXX">
                 </div>
                 <div class="form-group col-md-6">
                   <label for="credit">Credit Card</label>
-                  <input type="text" class="form-control" id="phone" placeholder="Credit Card Number">
+                  <input type="text" class="form-control" id="credit" placeholder="Credit Card Number">
                 </div>
                 <div class="form-group col-md-3">
                   <label for="cvv">CVV</label>
@@ -140,6 +140,35 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class ="container" id="confirmation">
+        <div class="page-header">
+          <h1>Confirmation</h1>
+        </div>
+        <p class="lead">Thank you for purchasing from The Nile.  Your confirmation number is #162419106101.</p>
+        <div class= "row">
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Personal Information</h3>
+              </div>
+              <div class="panel-body">
+                <strong id="personalInfo"></strong>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Credit Card Information</h3>
+              </div>
+              <div class="panel-body">
+                <strong id="creditInfo"></strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="lead">Please shop with us again!</p>
     </div>
     <!-- Review Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

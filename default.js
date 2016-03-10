@@ -310,6 +310,22 @@ var formData = function(e){
   for(var i = 0; i<form.length; i++){
     dataObject[form[i].id] = form[i].value;
   }
+  var infoPanel =  document.getElementById("personalInfo")
+  var creditPanel =  document.getElementById("creditInfo")
+  var name =  document.getElementById("name")
+  var fullName = dataObject.firstName + ' ' + dataObject.lastName;
+  var address = dataObject.address
+  var city = dataObject.city + ' ' + dataObject.state
+  var email = dataObject.email
+  var credit = dataObject.credit
+
+  var personalInfo = fullName + '<br>' + address + '<br>' + city + '<br>' + email + '<br>'
+  var creditInfo = "Credit # " + credit + '<br>' + email
+
+  infoPanel.insertAdjacentHTML('beforeend', personalInfo)
+  creditPanel.insertAdjacentHTML('beforeend', creditInfo)
+
+  console.log(dataObject)
   return dataObject
   e.preventDefault()
 }
