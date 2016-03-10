@@ -44,7 +44,7 @@
           <a href="#"><i class="fa fa-arrow-circle-o-left fa-3x" id="back" data-state = "title"></i></a>
         </div>
         <div class="col-md-offset-1 col-md-6">
-          <h1 id="item-h1"> Items Found </h1><hr>
+          <h1 id="item-h1"> Items Found: </h1><hr>
         </div>
         <div class="col-md-2">Items in Cart:
             <span id="number">0 </span>
@@ -129,10 +129,10 @@
                   <label for="cvv">CVV</label>
                   <input type="text" class="form-control" id="cvv" placeholder="CVV">
                 </div>
-                <div class= "form-group col-md-1 col-md-offset-7 margin-top">
+                <div class= "form-group col-md-2   col-md-offset-7">
                   <button type="submit" class="btn btn-default" id ="formSubmit">Submit</button>
                 </div>
-                <div class= "form-group col-md-1 margin-top">
+                <div class= "form-group col-md-1">
                   <button type="reset" class="btn btn-default">Reset</button>
                 </div>
               </form>
@@ -141,7 +141,6 @@
         </div>
       </div>
     </div>
-
     <!-- Review Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
@@ -166,7 +165,25 @@
             <h4 class="modal-title" id="writeTitle">Write a review</h4>
           </div>
           <div class="modal-body" id="writeContainer">
+            Select a rating:
             <form>
+              <div class="radio">
+                <label class="radio-inline">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1"> 1
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2"> 2
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3"> 3
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="4"> 4
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="5"> 5
+                </label>
+            </div>
               <textarea id="reviewText" class="form-control" rows="3"></textarea>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
