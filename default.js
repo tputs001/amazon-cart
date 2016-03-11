@@ -255,7 +255,7 @@ var createItems = function(name, highlights, description, id ,image, price, elem
       var optionName = "option" + i
       var optionName = d.createElement("option")
       optionName.value = i
-      select.className = "quantity"
+      select.className = "quantity form-control select-tp"
       optionName.appendChild(d.createTextNode(i))
       select.appendChild(optionName)
       colDiv.appendChild(select)
@@ -501,3 +501,37 @@ var links = function(text, id, className, col, modal, modalId){
   divContainer.appendChild(element)
   col.appendChild(divContainer)
 }
+
+//Recommendation
+var appendCar = function(car){
+  var carContainer = document.getElementById(car)
+  var carRow = document.createElement("div")
+  carRow.className = "row"
+  var track = [];
+  for( var i = 0; i < 4; i++ ){
+    var number = Math.floor((Math.random() * 7));
+    if(track.length == 0){
+      track.push(number);
+    } else {
+      while(track.indexOf(number) >= 0 ) {
+        number = Math.floor((Math.random() * 7))
+      }
+      track.push(number);
+    }
+    var thumb = document.createElement("div")
+    var link = document.createElement("a")
+    var image = document.createElement('img')
+
+    thumb.className = "col-sm-3 col-md-3 col-xs-3 thumbnail"
+    link.href="#"
+    image.src = dataList[number]
+    image.alt = "image"
+    image.className = "img-responsive imgProduct"
+    image.id = idList[number]
+    link.appendChild(image)
+    thumb.appendChild(link)
+    carRow.appendChild(thumb)
+  }
+    carContainer.appendChild(carRow)
+}
+appendCar("car-tp")

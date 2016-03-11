@@ -70,4 +70,63 @@ var data = [
       "keyword": "samsung",
       "category": ["electronics", "tablets", "samsung"]
     },
+    {
+      "name": "Samsung S6",
+      "price": 299.99,
+      "highlights": "Samsung Galaxy S6, White Pearl 32GB (AT&T)",
+      "description": ["Watch images and videos come to life on the 5.1-inch Quad HD Super AMOLED display, even in sunlight.", "Capture amazing photos with the fast-focus camera and take epic wide-angle selfies.", "16MP for exceptional clarity, 0.7 second activation for faster response, auto real-time HDR.", "Samsung Galaxy S6 features built-in, industry-standard wireless charging capabilities. Add a charging pad, and you have the convenience of charging without the need to plug in. And if you ever get in a low battery bind, simply switch to Ultra Power Saving Mode. It lets you continue to text and make calls even if you’re only down to only 10%." ],
+      "image": "images/s6.png",
+      "productImage" : "images/galaxys6.png",
+      "review": [{rating: 2, review: "This was a great laptop that performed really well!This was a great laptop that performed really well!This was a great laptop that performed really well!This was a great laptop that performed really well!"}, {rating: 1, review: "It could be better"}, {rating: 1, review: "BEST EVER!!"}, {rating: 2, review: "It is great but really expensive. Sold my house to just get one!"}],
+      "stars": 4,
+      "id": "galaxys6",
+      "serial": 6,
+      "keyword": "samsung",
+      "category": ["electronics", "samsung", "phone", "phones"]
+    },
+    {
+      "name": "Nexus 5X",
+      "price": 349.99,
+      "highlights": "LG Nexus 5X Unlocked Smartphone - Black 32GB",
+      "description": ["Pure Android Experience: Android 6.0 Marshmallow.", "Fingerprint Sensor", "New USB Type-C Charger", "Multi-mode device will work on all US carriers including AT&T, Verizon, T-Mobile and Sprint, as well as most international carriers.", "Nexus 5X and Nexus 6P devices get the latest version of Android directly from Google. These devices will receive Android version updates for at least two years from when the device first became available on the Google Store. Once an update is released, it can take up to two weeks or longer for it to reach your device, depending on on your carrier.", "The larger 1.55 µm pixels capture more light, even in the dimmest conditions, for stunning images. A faster Google Camera app and smart Google Photos app will keep your memories at your fingertips."],
+      "image": "images/nexus5x.png",
+      "productImage" : "images/nexus5x.png",
+      "review": [{rating: 2, review: "This was a great laptop that performed really well!This was a great laptop that performed really well!This was a great laptop that performed really well!This was a great laptop that performed really well!"}, {rating: 1, review: "It could be better"}, {rating: 1, review: "BEST EVER!!"}, {rating: 2, review: "It is great but really expensive. Sold my house to just get one!"}],
+      "stars": 5,
+      "id": "nexus5x",
+      "serial": 7,
+      "keyword": "nexus",
+      "category": ["electronics", "google", "phone", "phones"]
+    },
+    {
+      "name": "PlayStation 4 500GB Console",
+      "price": 349.99,
+      "highlights": "PlayStation 4 500GB Console - Call of Duty Black Ops III Bundle",
+      "description": ["PlayStation Exclusive: Play Map Packs 30 Days Early, Only on PlayStation", "Bundle Includes a black 500GB PS4, DUALSHOCK 4 wireless controller and standard edition Call of Duty: Black Ops 3 physical disc", "Cutting edge graphics bring game worlds to life like never before, and next gen processing speed gets you into your games faster than ever.", "Connect with your friends to broadcast and celebrate your epic moments at the press of the Share button to Twitch, UStream, YouTube, Facebook and Twitter.", "The PS4 system focuses on the gamer, ensuring that the very best games and the most immersive experiences are possible on the platform. The PS4 system enables the greatest game developers in the world to unlock their creativity and push the boundaries of play through a system that is tuned specifically to their needs. The end result is new games with rich, high-fidelity graphics and deeply immersive experiences."],
+      "image": "images/ps4.jpg",
+      "productImage" : "images/ps4.jpg",
+      "review": [{rating: 2, review: "This was a great laptop that performed really well!This was a great laptop that performed really well!This was a great laptop that performed really well!This was a great laptop that performed really well!"}, {rating: 1, review: "It could be better"}, {rating: 1, review: "BEST EVER!!"}, {rating: 2, review: "It is great but really expensive. Sold my house to just get one!"}],
+      "stars": 5,
+      "id": "ps4",
+      "serial": 8,
+      "keyword": "Playstation",
+      "category": ["electronics", "ps4", "games", "console"]
+    },
+    {
+      "name": "VIZIO D24-D1 D-Series 24",
+      "price": 349.99,
+      "highlights": "PlayStation 4 500GB Console - Call of Duty Black Ops III Bundle",
+      "description": ["VIZIO Internet Apps Plus - Instantly enjoy the latest hit movies, TV shows, music and even more premium apps straight from the Internet to your TV.", "Edge Lit LED backlight - Distributes LEDs along the edge of the screen for a brilliant picture in an ultra-thin design", "Built-in Wi-Fi - Connect with high-speed wireless for easy, clutter-free Internet access.", "1 HDMI ports - perfect for connecting all your high definition entertainment devices to the TV", "The all-new D-Series Full-Array LED TV has arrived. Featuring a new modern design, and brilliant picture quality, VIZIO’s D-Series brings you HD entertainment at an incredible value.", "VIZIO Internet Apps Plus and Dual-Band Wi-Fi are built into every VIZIO M-Series UHD Smart TV. Enjoy a variety of popular apps with Ultra HD streaming content and Internet radio at your fingertips†. The simplified app home and app launcher make finding your favorite entertainment effortless."],
+      "image": "images/D24.jpg",
+      "productImage" : "images/D24.jpg",
+      "review": [{rating: 4, review: "This was a great laptop that performed really well!This was a great laptop that performed really well!This was a great laptop that performed really well!This was a great laptop that performed really well!"}, {rating: 1, review: "It could be better"}, {rating: 1, review: "BEST EVER!!"}, {rating: 2, review: "It is great but really expensive. Sold my house to just get one!"}],
+      "stars": 4,
+      "id": "d24",
+      "serial": 9,
+      "keyword": "Vizio D24",
+      "category": ["electronics", "tv", "vizio", "console"]
+    }
 ];
+
+var dataList = ["images/ipadairC.jpg", "images/sfb2C.jpg", "images/mbp3C.jpg", "images/androidC.jpg", "images/carD24.jpg", "images/carnexus5x.jpg", "images/carps4.jpg"]
+var idList = ["caripadair", "carsurfacebookpro", "carmacbookpro", "cargalaxys6", "card24", "carnexus5x", "carps4"]
