@@ -3,16 +3,16 @@
   <head>
     <meta charset="utf-8">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="default.css" type="text/stylesheet" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="default.css" rel="stylesheet">
   </head>
   <body>
-    <div class="container" id="title-container">
+    <div class="container" id="title-box">
       <div class="row">
-        <div class="col-md-12" id="main-title">
+        <div class="col-md-12">
           <h1 class="text-white">The Nile</h1>
         </div>
-        <div class="col-md-offset-3 col-md-6 col-xs-6 col-xs-offset-3" id="search-bar">
+        <div class="col-md-offset-3 col-md-6 col-xs-6 col-xs-offset-3">
           <form>
             <div class="form-group">
               <label for="searchInput"></label>
@@ -26,22 +26,22 @@
       </div>
     </div>
       <!-- ITEM DESCRIPTION HTML MARK UP! -->
-    <div class="container hidden" id="items">
+    <div class="container hide" id="items">
       <div class="row">
         <div class="col-md-offset-3 col-md-6">
           <form>
             <div class="form-group">
               <label for="search"></label>
               <div class="form-group">
-                <input class="form-control" id="searchInput2" type="search" placeholder="Enter your search">
-                <button class="" id="searchClick2" type="submit" style="display: none">Search!</button>
+                <input class="form-control" id="find" type="search" placeholder="Enter your search">
+                <button class="" id="findClick" type="submit" style="display: none">Search!</button>
               </div>
             </div>
           </form>
         </div>
       </div>
       <div class = "row">
-        <div class="col-md-2 align-center">
+        <div class="col-md-2 text-center">
           <a href="#"><i class="fa fa-arrow-circle-o-left fa-3x" id="back" data-state = "title"></i></a>
         </div>
         <div class="col-md-offset-1 col-md-6">
@@ -54,18 +54,18 @@
           </a>
         </div>
       </div>
-      <div class="col-md-12" id="display-container">
+      <div class="col-md-12" id="display-box">
       </div>
     </div>
-    <div class="container hidden" id="payment-container">
+    <div class="container hide" id="payment-box">
       <div class="row">
         <div class="col-md-12">
           <div id="icon">
             <a href="/"><i class="fa fa-3x fa-home home"></i></a>
-            <a href="/"><i class="fa fa-arrow-circle-o-left fa-3x" id="back3"></i></a>
+            <a href="/"><i class="fa fa-arrow-circle-o-left fa-3x back item-page"></i></a>
             <h1>Payment</h1></hr>
           </div>
-          <div class="panel panel-default width center">
+          <div class="panel panel-default center-block width">
             <div class="panel-heading">
               <h3 class="panel-title">Your Cart </h3>
             </div>
@@ -84,7 +84,7 @@
               Total: <span id="total_sum">$0.00</span>
             </div>
           </div>
-          <div class="panel panel-default width center">
+          <div class="panel panel-default width center-block">
             <div class="panel-heading">
               <h3 class="panel-title">Credit Card Information </h3>
             </div>
@@ -142,12 +142,12 @@
         </div>
       </div>
     </div>
-    <div class ="container hidden" id="productPage">
+    <div class ="container hide" id="productPage">
       <div class = "panel panel-default">
         <div class="panel-body">
           <div class="row">
             <div class = "col-md-1">
-              <a href="/"><i class="fa fa-arrow-circle-o-left fa-3x" id="back3"></i></a>
+              <a href="/"><i class="fa fa-arrow-circle-o-left fa-3x back item-page"></i></a>
             </div>
             <div class="text-center col-md-11">
               <h2 id = "highlights"></h2>
@@ -170,7 +170,7 @@
       </div>
     </div>
   </div>
-    <div class ="container hidden" id="confirmation">
+    <div class ="container hide" id="confirmation">
         <div class="page-header">
           <a href="/"><i class="fa fa-3x fa-home home"></i></a><h1 id="confirm">Confirmation</h1>
         </div>
@@ -182,7 +182,7 @@
                 <h3 class="panel-title">Personal Information</h3>
               </div>
               <div class="panel-body">
-                <strong id="personalInfo"></strong>
+                <strong id="personal-info"></strong>
               </div>
             </div>
           </div>
@@ -192,7 +192,7 @@
                 <h3 class="panel-title">Credit Card Information</h3>
               </div>
               <div class="panel-body">
-                <strong id="creditInfo"></strong>
+                <strong id="credit-Info"></strong>
               </div>
             </div>
           </div>

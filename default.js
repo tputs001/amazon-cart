@@ -1,5 +1,5 @@
   //Global Scope :(
-var displayId = document.getElementById("display-container")
+var displayId = document.getElementById("display-box")
 var deleteItem = document.getElementById("cart")
 var addedObjects = []
 var tempVar;
@@ -7,17 +7,15 @@ var tempVar;
 // EVENT DELEGATION
 document.body.addEventListener('click', function(e){
   var target = e.target
-  console.log(e)
   if(target.id == "searchClick" ){ mainSearch(e) }
-  if(target.id == "searchClick2" ){ secondarySearch(e) }
+  if(target.id == "findClick" ){ secondarySearch(e) }
   if(target.textContent == "Add Cart"){ addItems(e) }
   if(target.textContent == "Delete") { deleteItems(e) }
   if(target.textContent == "Buy Now!") { addItems(e)}
   if(target.id == "checkout") { checkOut(e) }
   if(target.id == "formSubmit") { formData(e) }
   if(target.id == "back" || inObject(target.classList, "home")) { toggleDisplay(e, "title") }
-  if(target.id == "back2") { toggleDisplay(e, "items") }
-  if(target.id == "back3") { toggleDisplay(e, "items") }
+  if(inObject(target.classList, "back") && inObject(target.classList, "item-page")) { toggleDisplay(e, "items") }
   if(target.nodeName == "BUTTON" && isTrue(target.textContent, "read")){ reviewItems(e) }
   if(target.nodeName == "BUTTON" && isTrue(target.textContent, "write")){ reviewItems(e); tempVar = target.id }
   if(target.id == "reviewSubmit"){ writeSubmit(e, tempVar) }
@@ -131,7 +129,7 @@ var showProduct = function(e, state){
 var checkOut = function(e){
   clearDom(deleteItem)
   itemsInCart("cart");
-  toggleDisplay(e, "payment-container")
+  toggleDisplay(e, "payment-box")
   e.preventDefault();
 }
 
@@ -161,7 +159,6 @@ var reviewItems = function(e){
   var index = ((e.target.id.length - 6) * -1)
   var clickType = e.target.id.slice(e.target.id, 6)
   var clickName = e.target.id.slice(index)
-  console.log(clickName)
   if(clickType == "review"){
     data.forEach(function(items){
       if(items.id == clickName){
@@ -218,15 +215,15 @@ var ratings = function(col, rating, id){
 var searchItem = function(item){
   for(var i = 0; i<data.length; i++){
     if((data[i].category).indexOf(item) !== -1 || data[i].keyword == item){
-      var prop = data[i]
-      var name = prop.name
-      var highlights = prop.highlights
-      var description = prop.description
-      var id = prop.id
-      var image = prop.image
-      var price = prop.price
-      var stars = prop.stars
-      createItems(name, highlights, description, id, image, price, "display-container", stars)
+      var property = data[i]
+      var name = property.name
+      var highlights = property.highlights
+      var description = property.description
+      var id = property.id
+      var image = property.image
+      var price = property.price
+      var stars = property.stars
+      createItems(name, highlights, description, id, image, price, "display-box", stars)
     }
   }
 }
@@ -234,18 +231,18 @@ var searchItem = function(item){
 //Create several divs and columns that will append in the item container values from the data object.
 var createItems = function(name, highlights, description, id ,image, price, elementContainer, stars, quantity){
   var d = document
-    , rowDiv = d.createElement("div")
-    , colDiv1 = d.createElement("div")
-    , colDiv2 = d.createElement("div")
-    , hr = d.createElement("hr")
-    , strong = d.createElement("strong")
-    , colText = d.createTextNode(name)
-    , colText2 = d.createTextNode(highlights)
-    , colText3 = d.createTextNode("$" + price + "   -   ")
-    , innerContainer = d.getElementById(elementContainer)
-    , columnClass = "col-md-8 col-md-offset-1"
-    , imgClass = "col-md-2 align-center box-size"
-    , rowClass = "row"
+  var rowDiv = d.createElement("div")
+  var colDiv1 = d.createElement("div")
+  var colDiv2 = d.createElement("div")
+  var hr = d.createElement("hr")
+  var strong = d.createElement("strong")
+  var colText = d.createTextNode(name)
+  var colText2 = d.createTextNode(highlights)
+  var colText3 = d.createTextNode("$" + price + "   -   ")
+  var innerContainer = d.getElementById(elementContainer)
+  var columnClass = "col-md-8 col-md-offset-1"
+  var imgClass = "col-md-2 text-center"
+  var rowClass = "row"
   var append = function(row, col, rowClass, colClass, colText){
     row.className = rowClass
     col.className = colClass
@@ -274,7 +271,7 @@ var createItems = function(name, highlights, description, id ,image, price, elem
     element.src = image
     element.id = "img" + id
     element.className = "img-responsive imgProduct"
-    if(elementContainer == "display-container"){
+    if(elementContainer == "display-box"){
       links("Add Cart", id, "divLink", col)
       select(9, col)
 
@@ -304,8 +301,8 @@ var createItems = function(name, highlights, description, id ,image, price, elem
 }
 
 //Checks items added to the cart
-var itemsInCart = function(id_target){
-  var sub_total = 0;
+var itemsInCart = function(idTarget){
+  var subTotal = 0;
   for(var i = 0; i < addedObjects.length; i++){
     for(var j = 0; j < data.length; j++){
       if (addedObjects[i].id == data[j].id){
@@ -317,12 +314,12 @@ var itemsInCart = function(id_target){
         var image = prop.image
         var price = prop.price
         var stars = prop.stars
-        sub_total += (price * addedObjects[i].quantity)
-        createItems(name, highlights, description, id, image, price, id_target, stars, addedObjects[i].quantity)
+        subTotal += (price * addedObjects[i].quantity)
+        createItems(name, highlights, description, id, image, price, idTarget, stars, addedObjects[i].quantity)
       }
     }
   }
-  updateTotal(sub_total)
+  updateTotal(subTotal)
 }
 
 //Loops through the form elements creating an object of data to be processed for payment
@@ -333,8 +330,8 @@ var formData = function(e){
   for(var i = 0; i<form.length; i++){
     dataObject[form[i].id] = form[i].value;
   }
-  var infoPanel =  document.getElementById("personalInfo")
-  var creditPanel =  document.getElementById("creditInfo")
+  var infoPanel =  document.getElementById("personal-info")
+  var creditPanel =  document.getElementById("credit-Info")
   var name =  document.getElementById("name")
   var fullName = dataObject.firstName + ' ' + dataObject.lastName;
   var address = dataObject.address
@@ -352,16 +349,16 @@ var formData = function(e){
 }
 
 //Update the number of items in the cart
-var updateTotal = function(sub_total){
+var updateTotal = function(subTotal){
   var subtotalSpan = document.getElementById("subtotal")
   var taxSpan = document.getElementById("tax")
   var shippingSpan = document.getElementById("shipping")
   var totalSpan = document.getElementById("total_sum")
 
-  var tax = (sub_total * 0.08)
+  var tax = (subTotal * 0.08)
   var shipping = 25.00
-  var total = (sub_total + tax + shipping)
-  subtotalSpan.innerHTML = formatting(sub_total.toFixed(2))
+  var total = (subTotal + tax + shipping)
+  subtotalSpan.innerHTML = formatting(subTotal.toFixed(2))
   taxSpan.innerHTML = formatting(tax.toFixed(2))
   shippingSpan.innerHTML = formatting(shipping)
   totalSpan.innerHTML = formatting(total.toFixed(2))
@@ -411,35 +408,35 @@ var toggleDisplay = function(e, state){
   var productPageClasses = containers[3]
 
   if(state == "title"){
-    itemClasses.classList.add("hidden")
-    paymentClasses.classList.add("hidden")
-    titleClasses.classList.remove("hidden")
-    confirmationClasses.classList.add("hidden")
-    productPageClasses.classList.add("hidden")
+    itemClasses.classList.add("hide")
+    paymentClasses.classList.add("hide")
+    titleClasses.classList.remove("hide")
+    confirmationClasses.classList.add("hide")
+    productPageClasses.classList.add("hide")
   } else if(state == "items"){
-    titleClasses.classList.add("hidden")
-    paymentClasses.classList.add("hidden")
-    itemClasses.classList.remove("hidden")
-    confirmationClasses.classList.add("hidden")
-    productPageClasses.classList.add("hidden")
+    titleClasses.classList.add("hide")
+    paymentClasses.classList.add("hide")
+    itemClasses.classList.remove("hide")
+    confirmationClasses.classList.add("hide")
+    productPageClasses.classList.add("hide")
   } else if(state == "confirmation"){
-    itemClasses.classList.add("hidden")
-    paymentClasses.classList.add("hidden")
-    titleClasses.classList.add("hidden")
-    confirmationClasses.classList.remove("hidden")
-    productPageClasses.classList.add("hidden")
+    itemClasses.classList.add("hide")
+    paymentClasses.classList.add("hide")
+    titleClasses.classList.add("hide")
+    confirmationClasses.classList.remove("hide")
+    productPageClasses.classList.add("hide")
   } else if(state == "product"){
-    itemClasses.classList.add("hidden")
-    paymentClasses.classList.add("hidden")
-    titleClasses.classList.add("hidden")
-    confirmationClasses.classList.add("hidden")
-    productPageClasses.classList.remove("hidden")
+    itemClasses.classList.add("hide")
+    paymentClasses.classList.add("hide")
+    titleClasses.classList.add("hide")
+    confirmationClasses.classList.add("hide")
+    productPageClasses.classList.remove("hide")
   } else {
-    titleClasses.classList.add("hidden")
-    itemClasses.classList.add("hidden")
-    paymentClasses.classList.remove("hidden")
-    confirmationClasses.classList.add("hidden")
-    productPageClasses.classList.add("hidden")
+    titleClasses.classList.add("hide")
+    itemClasses.classList.add("hide")
+    paymentClasses.classList.remove("hide")
+    confirmationClasses.classList.add("hide")
+    productPageClasses.classList.add("hide")
   }
   e.preventDefault()
 }
