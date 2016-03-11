@@ -10,15 +10,16 @@
     <div class="container" id="title-container">
       <div class="row">
         <div class="col-md-12" id="main-title">
-          <h1>Inspire</h1>
+          <h1 class="text-white">The Nile</h1>
         </div>
         <div class="col-md-offset-3 col-md-6 col-xs-6 col-xs-offset-3" id="search-bar">
           <form>
             <div class="form-group">
               <label for="searchInput"></label>
               <input class="form-control" id="searchInput" type="search" placeholder="Enter your search">
-              <button class="btn btn-default margin-top" id="searchClick" type="submit">Search!</button>
-              <i class="fa fa-search fa-2x" id="magnifier-icon"></i>
+            </div>
+            <div class = "form-group">
+              <button class="btn btn-default" id="searchClick" type="submit">Search!</button>
             </div>
           </form>
         </div>
@@ -61,7 +62,7 @@
         <div class="col-md-12">
           <div id="icon">
             <a href="/"><i class="fa fa-3x fa-home home"></i></a>
-            <a href="/"><i class="fa fa-arrow-circle-o-left fa-3x" id="back2"></i></a>
+            <a href="/"><i class="fa fa-arrow-circle-o-left fa-3x" id="back3"></i></a>
             <h1>Payment</h1></hr>
           </div>
           <div class="panel panel-default width center">
@@ -141,6 +142,34 @@
         </div>
       </div>
     </div>
+    <div class ="container hidden" id="productPage">
+      <div class = "panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class = "col-md-1">
+              <a href="/"><i class="fa fa-arrow-circle-o-left fa-3x" id="back3"></i></a>
+            </div>
+            <div class="text-center col-md-11">
+              <h2 id = "highlights"></h2>
+            </div>
+            <div id="productImage">
+            </div>
+            <div class="row">
+              <div class = "col-md-1 col-md-offset-5" id ="productBuy">
+              </div>
+              <div class = "col-md-1" id = "reviewBuy">
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <h2>Product Description</h2>
+                <p id ="productDescription"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
     <div class ="container hidden" id="confirmation">
         <div class="page-header">
           <a href="/"><i class="fa fa-3x fa-home home"></i></a><h1 id="confirm">Confirmation</h1>

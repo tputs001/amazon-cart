@@ -36,6 +36,10 @@ body, html {
   -webkit-text-stroke-color: black;
 }
 
+.text-white {
+  color: white;
+}
+
 #checkout {
   display:inline;
 }
@@ -92,4 +96,9 @@ body, html {
   -moz-background-size: cover;
   background-size: cover;
   -o-background-size: cover;
+}
+
+#recommend {
+  position: relative;
+  top: 80%
 }

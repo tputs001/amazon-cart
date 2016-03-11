@@ -1,4 +1,4 @@
-//Global Scope :(
+  //Global Scope :(
 var displayId = document.getElementById("display-container")
 var deleteItem = document.getElementById("cart")
 var addedObjects = []
@@ -7,23 +7,25 @@ var tempVar;
 // EVENT DELEGATION
 document.body.addEventListener('click', function(e){
   var target = e.target
-  console.log(e.target.classList)
-  // console.log(inObject(target.classList, "home"))
+  console.log(e)
   if(target.id == "searchClick" ){ mainSearch(e) }
   if(target.id == "searchClick2" ){ secondarySearch(e) }
   if(target.textContent == "Add Cart"){ addItems(e) }
   if(target.textContent == "Delete") { deleteItems(e) }
+  if(target.textContent == "Buy Now!") { addItems(e)}
   if(target.id == "checkout") { checkOut(e) }
   if(target.id == "formSubmit") { formData(e) }
   if(target.id == "back" || inObject(target.classList, "home")) { toggleDisplay(e, "title") }
   if(target.id == "back2") { toggleDisplay(e, "items") }
+  if(target.id == "back3") { toggleDisplay(e, "items") }
   if(target.nodeName == "BUTTON" && isTrue(target.textContent, "read")){ reviewItems(e) }
   if(target.nodeName == "BUTTON" && isTrue(target.textContent, "write")){ reviewItems(e); tempVar = target.id }
   if(target.id == "reviewSubmit"){ writeSubmit(e, tempVar) }
+  if(target.nodeName == "IMG" && inObject(target.classList, "imgProduct")){showProduct(e, "product")}
 })
 
 var mainSearch = function(e){
-  var itemSearched = e.target.previousElementSibling.value
+  var itemSearched = e.target.parentElement.parentElement.firstElementChild.lastElementChild.value
   clearDom(displayId)
   searchItem(itemSearched)
   toggleDisplay(e, "items")
@@ -41,9 +43,16 @@ var secondarySearch = function(e){
 var addItems = function(e){
   var addedCount = document.getElementById("number")
   var elementId = e.target.id
-  var itemObject = {
-    id: elementId,
-    quantity: parseInt(e.target.offsetParent.childNodes[3].value)
+  if(e.target.innerText == "Buy Now!"){
+    var itemObject = {
+      id : elementId,
+      quantity: 1
+    }
+  } else {
+    var itemObject = {
+      id: elementId,
+      quantity: parseInt(e.target.offsetParent.childNodes[3].value)
+    }
   }
 
   if(addedObjects.length == 0){
@@ -81,6 +90,43 @@ var deleteItems = function(e){
     itemsInCart("cart")
 }
 
+//Show Product Page for reach item
+var showProduct = function(e, state){
+  var productContainer = document.getElementById("productPage")
+  var index = ((e.target.id.length - 3) * -1)
+  var name = e.target.id.slice(index)
+  var highContainer = document.getElementById("highlights")
+  var imageContainer = document.getElementById("productImage")
+  var descriptionContainer = document.getElementById("productDescription")
+  var buy = document.getElementById("productBuy")
+  var reviewBuy = document.getElementById("reviewBuy")
+  var containers = [highContainer, imageContainer, descriptionContainer, buy, reviewBuy]
+  for(var i = 0; i<containers.length; i++){
+    clearDom(containers[i])
+  }
+  toggleDisplay(e, state)
+  var imgAppending = function(div, image){
+    var img = document.createElement("img")
+    img.src = image
+    img.id = "imageProduct"
+    img.className = "img-responsive center-block"
+    div.appendChild(img)
+  }
+  for(var i = 0; i < data.length; i++) {
+    if(data[i].id == name){
+      var highlights = data[i].highlights
+      var productImage = data[i].productImage
+      var buyId = 'buy' + data[i].id
+      var reviewId = 'review' + data[i].id
+      highContainer.insertAdjacentHTML('beforeend', highlights )
+      imgAppending(imageContainer, productImage)
+      list(data[i].description, descriptionContainer)
+      links("Buy Now!", buyId, "", buy)
+      links("Read a review", reviewId, "", reviewBuy, "modal", "#myModal")
+    }
+  }
+}
+
 //OnClick will send you to the checkout page
 var checkOut = function(e){
   clearDom(deleteItem)
@@ -89,7 +135,7 @@ var checkOut = function(e){
   e.preventDefault();
 }
 
-//Append thee reviews and ratings on the hidden modal
+//Append the reviews and ratings on the hidden modal
 var appendModal = function(rowClass, colClass, col2Class, itemRating, itemReview){
   var modalBody = document.getElementById("modalContainer")
   var modalContainer = document.createElement("div")
@@ -115,6 +161,7 @@ var reviewItems = function(e){
   var index = ((e.target.id.length - 6) * -1)
   var clickType = e.target.id.slice(e.target.id, 6)
   var clickName = e.target.id.slice(index)
+  console.log(clickName)
   if(clickType == "review"){
     data.forEach(function(items){
       if(items.id == clickName){
@@ -199,16 +246,6 @@ var createItems = function(name, highlights, description, id ,image, price, elem
     , columnClass = "col-md-8 col-md-offset-1"
     , imgClass = "col-md-2 align-center box-size"
     , rowClass = "row"
-  var list = function(array){
-    for(i=0; i<array.length; i++){
-      var list = d.createElement("li")
-      var space = d.createElement("br")
-      var listText = d.createTextNode(array[i])
-      list.appendChild(listText)
-      colDiv2.appendChild(list)
-    }
-    colDiv2.appendChild(space)
-  }
   var append = function(row, col, rowClass, colClass, colText){
     row.className = rowClass
     col.className = colClass
@@ -228,31 +265,15 @@ var createItems = function(name, highlights, description, id ,image, price, elem
     }
   }
 
-  var links = function(text, id, className, col, modal, modalId){
-    var linkText = d.createTextNode(text)
-    var divContainer = d.createElement("div")
-    var element = d.createElement("button")
-    element.type = "button"
-    element.className = "btn btn-primary btn-sm"
-    divContainer.className = className
-    element.id = id
-    if(modal != undefined){
-      var dataAttr = document.createAttribute("data-toggle")
-      var dataAttr1 = document.createAttribute("data-target")
-      dataAttr.value = modal
-      dataAttr1.value = modalId
-      element.setAttributeNode(dataAttr)
-      element.setAttributeNode(dataAttr1)
-    }
-    element.appendChild(linkText)
-    divContainer.appendChild(element)
-    col.appendChild(divContainer)
-  }
   var img = function(image, col, id){
     var element = d.createElement("img")
-    col.appendChild(element)
+    var imgLink = d.createElement("a")
+    imgLink.href = "#"
+    imgLink.appendChild(element)
+    col.appendChild(imgLink)
     element.src = image
-    element.className = "img-responsive img-test"
+    element.id = "img" + id
+    element.className = "img-responsive imgProduct"
     if(elementContainer == "display-container"){
       links("Add Cart", id, "divLink", col)
       select(9, col)
@@ -275,7 +296,7 @@ var createItems = function(name, highlights, description, id ,image, price, elem
   append(rowDiv, colDiv2, rowClass, columnClass, strong)
   append(rowDiv, colDiv2, rowClass, columnClass, colText2)
   img(image, colDiv1, id)
-  list(description)
+  list(description, colDiv2)
   ratings(colDiv1, stars, "starContainer")
   review(id)
   innerContainer.appendChild(rowDiv)
@@ -386,28 +407,39 @@ var toggleDisplay = function(e, state){
   var titleClasses = containers[0]
   var itemClasses = containers[1]
   var paymentClasses = containers[2]
-  var confirmationClasses = containers[3]
+  var confirmationClasses = containers[4]
+  var productPageClasses = containers[3]
 
   if(state == "title"){
     itemClasses.classList.add("hidden")
     paymentClasses.classList.add("hidden")
     titleClasses.classList.remove("hidden")
     confirmationClasses.classList.add("hidden")
+    productPageClasses.classList.add("hidden")
   } else if(state == "items"){
     titleClasses.classList.add("hidden")
     paymentClasses.classList.add("hidden")
     itemClasses.classList.remove("hidden")
     confirmationClasses.classList.add("hidden")
+    productPageClasses.classList.add("hidden")
   } else if(state == "confirmation"){
     itemClasses.classList.add("hidden")
+    paymentClasses.classList.add("hidden")
+    titleClasses.classList.add("hidden")
+    confirmationClasses.classList.remove("hidden")
+    productPageClasses.classList.add("hidden")
+  } else if(state == "product"){
     itemClasses.classList.add("hidden")
     paymentClasses.classList.add("hidden")
-    confirmationClasses.classList.remove("hidden")
+    titleClasses.classList.add("hidden")
+    confirmationClasses.classList.add("hidden")
+    productPageClasses.classList.remove("hidden")
   } else {
     titleClasses.classList.add("hidden")
     itemClasses.classList.add("hidden")
     paymentClasses.classList.remove("hidden")
     confirmationClasses.classList.add("hidden")
+    productPageClasses.classList.add("hidden")
   }
   e.preventDefault()
 }
@@ -430,15 +462,45 @@ var isTrue = function(stringName, word){
   return (string.indexOf(substring) > -1)
 }
 
+//Check to see if an element is in an array.
 var inObject = function(object, value){
   for(var i = 0; i< object.length; i++){
     if(object[i] == value){
       return true
     }
   }
-  // object.forEach(function(item){
-  //   if(item == value){
-  //     return true
-  //   }
-  // })
+}
+
+//Append items in an array to a list on the Dom
+var list = function(array, div){
+  for(i=0; i<array.length; i++){
+    var list = document.createElement("li")
+    var space = document.createElement("br")
+    var listText = document.createTextNode(array[i])
+    list.appendChild(listText)
+    div.appendChild(list)
+  }
+  div.appendChild(space)
+}
+
+//Create Links with buttons and appends it to the dom
+var links = function(text, id, className, col, modal, modalId){
+  var linkText = document.createTextNode(text)
+  var divContainer = document.createElement("div")
+  var element = document.createElement("button")
+  element.type = "button"
+  element.className = "btn btn-primary btn-sm"
+  divContainer.className = className
+  element.id = id
+  if(modal != undefined){
+    var dataAttr = document.createAttribute("data-toggle")
+    var dataAttr1 = document.createAttribute("data-target")
+    dataAttr.value = modal
+    dataAttr1.value = modalId
+    element.setAttributeNode(dataAttr)
+    element.setAttributeNode(dataAttr1)
+  }
+  element.appendChild(linkText)
+  divContainer.appendChild(element)
+  col.appendChild(divContainer)
 }
