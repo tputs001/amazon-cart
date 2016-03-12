@@ -2,11 +2,13 @@
 var displayId = document.getElementById("display-box")
 var deleteItem = document.getElementById("cart")
 var addedObjects = []
+var itemsFound = [];
 var tempVar;
 
 // EVENT DELEGATION
 document.body.addEventListener('click', function(e){
   var target = e.target
+  console.log(e)
   if(target.id == "searchClick" ){ mainSearch(e) }
   if(target.id == "findClick" ){ secondarySearch(e) }
   if(target.textContent == "Add Cart"){ addItems(e) }
@@ -14,12 +16,13 @@ document.body.addEventListener('click', function(e){
   if(target.textContent == "Buy Now!") { addItems(e)}
   if(target.id == "checkout") { checkOut(e) }
   if(target.id == "formSubmit") { formData(e) }
-  if(target.id == "back" || inObject(target.classList, "home")) { toggleDisplay(e, "title") }
-  if(inObject(target.classList, "back") && inObject(target.classList, "item-page")) { toggleDisplay(e, "items") }
+  if(target.id == "back" || inClass(target.classList, "home")) { toggleDisplay(e, "title") }
+  if(inClass(target.classList, "back") && inClass(target.classList, "item-page")) { mainSearch(e) }
   if(target.nodeName == "BUTTON" && isTrue(target.textContent, "read")){ reviewItems(e) }
   if(target.nodeName == "BUTTON" && isTrue(target.textContent, "write")){ reviewItems(e); tempVar = target.id }
   if(target.id == "reviewSubmit"){ writeSubmit(e, tempVar) }
-  if(target.nodeName == "IMG" && inObject(target.classList, "imgProduct")){showProduct(e, "product")}
+  if(target.nodeName == "IMG" && inClass(target.classList, "imgProduct")){ showProduct(e, "product" )}
+  if(inClass(target.classList, "sort")){ sortRating(e, itemsFound) };
 })
 
 var mainSearch = function(e){
@@ -215,7 +218,7 @@ var ratings = function(col, rating, id){
 
 //Search the data object based on the input value of the user
 var searchItem = function(item){
-  var grabData = function(){
+  var grabData = function(i){
     var property = data[i]
     var name = property.name
     var highlights = property.highlights
@@ -224,10 +227,11 @@ var searchItem = function(item){
     var image = property.image
     var price = property.price
     var stars = property.stars
+    itemsFound.push(data[i]);
     createItems(name, highlights, description, id, image, price, "display-box", stars)
   }
   for(var i = 0; i<data.length; i++){
-    if(item.trim().length == 0){
+    if( item == undefined || item.trim().length == 0){
       grabData(i)
     } else if((data[i].category).indexOf(item) !== -1 || data[i].keyword == item){
       grabData(i)
@@ -456,9 +460,9 @@ var isTrue = function(stringName, word){
 }
 
 //Check to see if an element is in an array.
-var inObject = function(object, value){
-  for(var i = 0; i< object.length; i++){
-    if(object[i] == value){
+var inClass = function(classes, name){
+  for(var i = 0; i< classes.length; i++){
+    if(classes[i] == name){
       return true
     }
   }
@@ -505,12 +509,12 @@ var appendCar = function(car){
   carRow.className = "row"
   var track = [];
   for( var i = 0; i < 4; i++ ){
-    var number = Math.floor((Math.random() * 7));
+    var number = Math.floor((Math.random() * 9));
     if(track.length == 0){
       track.push(number);
     } else {
       while(track.indexOf(number) >= 0 ) {
-        number = Math.floor((Math.random() * 7))
+        number = Math.floor((Math.random() * 9))
       }
       track.push(number);
     }
@@ -520,10 +524,10 @@ var appendCar = function(car){
 
     thumb.className = "col-sm-3 col-md-3 col-xs-3 thumbnail"
     link.href="#"
-    image.src = dataList[number]
+    image.src = data[number].carImage
     image.alt = "image"
     image.className = "img-responsive imgProduct"
-    image.id = idList[number]
+    image.id = data[number].carId
     link.appendChild(image)
     thumb.appendChild(link)
     carRow.appendChild(thumb)
@@ -531,3 +535,23 @@ var appendCar = function(car){
     carContainer.appendChild(carRow)
 }
 appendCar("car-tp")
+
+//Sort By Rating
+var sortRating = function(e, items){
+  clearDom(displayId)
+  console.log(e.target.id)
+  if(e.target.id == "sort-rating"){ var collection = _.sortBy(items, "stars").reverse() }
+  if(e.target.id == "sort-low") { var collection = _.sortBy(items, "price") }
+  if(e.target.id == "sort-high") { var collection = _.sortBy(items, "price").reverse() }
+  for(var i  =0; i<collection.length; i++){
+    var property = collection[i]
+    var name = property.name
+    var highlights = property.highlights
+    var description = property.description
+    var id = property.id
+    var image = property.image
+    var price = property.price
+    var stars = property.stars
+    createItems(name, highlights, description, id, image, price, "display-box", stars)
+  }
+}

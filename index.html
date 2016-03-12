@@ -53,11 +53,21 @@
         <div class="col-md-offset-1 col-md-6">
           <h1 id="item-h1"> Items Found: </h1><hr>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <a href= "#">
             <i id="checkout" class="fa fa-2x fa-shopping-cart"></i>
             <span id="number">0 </span>
           </a>
+        </div>
+        <div class="btn-group filter">
+          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Filter <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class = "sort" href="#" id="sort-rating">Sort By Rating</a></li>
+            <li><a class = "sort" href="#" id="sort-low">Sort By Lowest Price</a></li>
+            <li><a class = "sort" href="#" id="sort-high">Sort By Highest Price</a></li>
+          </ul>
         </div>
       </div>
       <div class="col-md-12" id="display-box">
@@ -264,6 +274,7 @@
         </div>
       </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="data.js"></script>
     <script src="default.js"></script>
