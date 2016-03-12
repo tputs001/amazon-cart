@@ -39,6 +39,7 @@ var secondarySearch = function(e){
 
 //Add Items to the Cart
 var addItems = function(e){
+  console.log("trigger?")
   var addedCount = document.getElementById("number")
   var elementId = e.target.id
   if(e.target.innerText == "Buy Now!"){
@@ -66,6 +67,7 @@ var addItems = function(e){
     addedObjects.push(itemObject)
   }
   addedCount.innerHTML = objectAddProperty(addedObjects, "quantity")
+  console.log(addedObjects)
   e.preventDefault()
 }
 
@@ -114,7 +116,7 @@ var showProduct = function(e, state){
     if(data[i].id == name){
       var highlights = data[i].highlights
       var productImage = data[i].productImage
-      var buyId = 'buy' + data[i].id
+      var buyId = data[i].id
       var reviewId = 'review' + data[i].id
       highContainer.insertAdjacentHTML('beforeend', highlights )
       imgAppending(imageContainer, productImage)
@@ -241,6 +243,7 @@ var createItems = function(name, highlights, description, id ,image, price, elem
   var colDiv2 = d.createElement("div")
   var hr = d.createElement("hr")
   var strong = d.createElement("strong")
+  var strong2 = d.createElement("strong")
   var colText = d.createTextNode(name)
   var colText2 = d.createTextNode(highlights)
   var colText3 = d.createTextNode("$" + price + "   -   ")
@@ -248,6 +251,7 @@ var createItems = function(name, highlights, description, id ,image, price, elem
   var columnClass = "col-md-8 col-md-offset-1"
   var imgClass = "col-md-2 text-center"
   var rowClass = "row"
+
   var append = function(row, col, rowClass, colClass, colText){
     row.className = rowClass
     col.className = colClass
@@ -293,8 +297,9 @@ var createItems = function(name, highlights, description, id ,image, price, elem
     links("Write a review", writeId, "divLink", colDiv2, "modal", "#writeModal")
   }
 
+  strong2.appendChild(colText)
   strong.appendChild(colText3)
-  append(rowDiv, colDiv1, rowClass, imgClass, colText)
+  append(rowDiv, colDiv1, rowClass, imgClass, strong2)
   append(rowDiv, colDiv2, rowClass, columnClass, strong)
   append(rowDiv, colDiv2, rowClass, columnClass, colText2)
   img(image, colDiv1, id)
@@ -359,7 +364,6 @@ var updateTotal = function(subTotal){
   var taxSpan = document.getElementById("tax")
   var shippingSpan = document.getElementById("shipping")
   var totalSpan = document.getElementById("total_sum")
-
   var tax = (subTotal * 0.08)
   var shipping = 25.00
   var total = (subTotal + tax + shipping)
@@ -406,42 +410,29 @@ var objectAddProperty = function(objectArray, property){
 //To toggle between states for which page the user is currently on.
 var toggleDisplay = function(e, state){
   var containers = document.getElementsByClassName("container")
-  var titleClasses = containers[0]
-  var itemClasses = containers[1]
-  var paymentClasses = containers[2]
-  var confirmationClasses = containers[4]
-  var productPageClasses = containers[3]
+  var titleBox = containers[0]
+  var itemBox = containers[1]
+  var paymentBox = containers[2]
+  var productBox = containers[3]
+  var confirmBox = containers[4]
+  var toggle = function(box1, box2, box3, box4, box5){
+    box1.classList.add("hide")
+    box2.classList.add("hide")
+    box3.classList.add("hide")
+    box4.classList.add("hide")
+    box5.classList.remove("hide")
+  }
 
   if(state == "title"){
-    itemClasses.classList.add("hide")
-    paymentClasses.classList.add("hide")
-    titleClasses.classList.remove("hide")
-    confirmationClasses.classList.add("hide")
-    productPageClasses.classList.add("hide")
+    toggle(itemBox, paymentBox, productBox, confirmBox, titleBox)
   } else if(state == "items"){
-    titleClasses.classList.add("hide")
-    paymentClasses.classList.add("hide")
-    itemClasses.classList.remove("hide")
-    confirmationClasses.classList.add("hide")
-    productPageClasses.classList.add("hide")
+    toggle(titleBox, paymentBox, productBox, confirmBox, itemBox)
   } else if(state == "confirmation"){
-    itemClasses.classList.add("hide")
-    paymentClasses.classList.add("hide")
-    titleClasses.classList.add("hide")
-    confirmationClasses.classList.remove("hide")
-    productPageClasses.classList.add("hide")
+    toggle(titleBox, itemBox, paymentBox, productBox, confirmBox)
   } else if(state == "product"){
-    itemClasses.classList.add("hide")
-    paymentClasses.classList.add("hide")
-    titleClasses.classList.add("hide")
-    confirmationClasses.classList.add("hide")
-    productPageClasses.classList.remove("hide")
+    toggle(titleBox, itemBox, paymentBox, confirmBox, productBox)
   } else {
-    titleClasses.classList.add("hide")
-    itemClasses.classList.add("hide")
-    paymentClasses.classList.remove("hide")
-    confirmationClasses.classList.add("hide")
-    productPageClasses.classList.add("hide")
+    toggle(titleBox, itemBox, confirmBox, productBox, paymentBox)
   }
   e.preventDefault()
 }
