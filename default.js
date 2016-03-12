@@ -213,17 +213,22 @@ var ratings = function(col, rating, id){
 
 //Search the data object based on the input value of the user
 var searchItem = function(item){
+  var grabData = function(){
+    var property = data[i]
+    var name = property.name
+    var highlights = property.highlights
+    var description = property.description
+    var id = property.id
+    var image = property.image
+    var price = property.price
+    var stars = property.stars
+    createItems(name, highlights, description, id, image, price, "display-box", stars)
+  }
   for(var i = 0; i<data.length; i++){
-    if((data[i].category).indexOf(item) !== -1 || data[i].keyword == item){
-      var property = data[i]
-      var name = property.name
-      var highlights = property.highlights
-      var description = property.description
-      var id = property.id
-      var image = property.image
-      var price = property.price
-      var stars = property.stars
-      createItems(name, highlights, description, id, image, price, "display-box", stars)
+    if(item.trim().length == 0){
+      grabData(i)
+    } else if((data[i].category).indexOf(item) !== -1 || data[i].keyword == item){
+      grabData(i)
     }
   }
 }
