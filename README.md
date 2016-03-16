@@ -1,6 +1,6 @@
 # The Nile
 
-##A simulated shopping cart with functionality built using Javascript.
+A simulated shopping cart with functionality built using Javascript.
 
 ##Functionality includes:
 1. Users can search items.  (some keywords examples are: electronics, computers, tablets)
