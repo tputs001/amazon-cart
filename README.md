@@ -4,12 +4,6 @@ A simulated shopping cart with functionality built using Javascript.
 
 [Live Demo](https://nile.herokuapp.com/)
 
-![screen shot 2016-04-14 at 11 23 58 am](https://cloud.githubusercontent.com/assets/528146/14539010/4c52bdea-0233-11e6-8ff6-07ac22969f08.png)
-
-![screen shot 2016-04-14 at 11 19 18 am](https://cloud.githubusercontent.com/assets/528146/14539022/59a0d540-0233-11e6-9788-a2888d3a4a4e.png)
-
-![screen shot 2016-04-14 at 11 20 04 am](https://cloud.githubusercontent.com/assets/528146/14539028/5ec48a62-0233-11e6-8245-6d2cc3a24c74.png)
-
 ##Functionality includes:
 1. Users can search items.  (some keywords examples are: electronics, computers, tablets)
 2. Users can also enter no search term to return the entire catalog.
@@ -22,3 +16,8 @@ A simulated shopping cart with functionality built using Javascript.
 9. In the payment page, the application will take the user's information and return an object to be sent to server.
 10. A confirmation will be displayed after a successful submission.
 11. Users can toggle between pages using the home and back buttons.
+
+##Screenshots:
+<img src="https://cloud.githubusercontent.com/assets/528146/14539010/4c52bdea-0233-11e6-8ff6-07ac22969f08.png" width="30%"></img>
+<img src="https://cloud.githubusercontent.com/assets/528146/14539022/59a0d540-0233-11e6-9788-a2888d3a4a4e.png" width="30%"></img> 
+<img src="https://cloud.githubusercontent.com/assets/528146/14539028/5ec48a62-0233-11e6-8245-6d2cc3a24c74.png" width="30%"></img> 
