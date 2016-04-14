@@ -1,0 +1,22 @@
+{
+  "name": "nile",
+  "version": "1.0.0",
+  "description": "A simulated shopping cart with functionality built using Javascript.",
+  "main": "data.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tputs001/nile.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tputs001/nile/issues"
+  },
+  "homepage": "https://github.com/tputs001/nile#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
